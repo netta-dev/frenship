@@ -1,0 +1,9 @@
+*.swp
+*~
+.DS_Store
+__pycache__/
+.env*
+.venv/
+.claude/settings.local.json
+.claude/worktrees/
+.eng-provisioned
