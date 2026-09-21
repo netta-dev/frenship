@@ -2,7 +2,9 @@
 
 Python: `#` blocks via `tokenize`, docstrings via `ast`. Dart and proto: `//` blocks,
 `///` doc blocks, and `/* */` blocks via a small scanner that skips string literals.
-Consecutive lines of one kind merge into a block. In diff mode only blocks that overlap
+Hash-comment files are found by suffix, by name (`Dockerfile`), or by a shell shebang when the
+file has no suffix; the shebang line itself is not a comment. Consecutive lines of one kind merge
+into a block. In diff mode only blocks that overlap
 an added line survive, so the review sees what the change wrote.
 """
 
@@ -26,6 +28,12 @@ SUPPORTED = {
     ".toml": "hash", ".yaml": "hash", ".yml": "hash", ".ini": "hash", ".cfg": "hash",
     ".conf": "hash", ".sh": "hash", ".bash": "hash", ".zsh": "hash",
 }
+
+# Files found by name rather than suffix.
+NAMED = {"Dockerfile": "hash", "Containerfile": "hash", "Makefile": "hash"}
+
+# A first line naming a shell marks a suffix-less script as a hash-comment file.
+_SHEBANG = re.compile(r"^#!\s*\S*(?:/|\s)(?:ba|z|da|k)?sh\b|^#!\s*\S*/env\s+(?:ba|z|da|k)?sh\b")
 
 # Changed files that carry no code comments, skipped without a word. Any other unsupported
 # file is reported, so a language nobody thought of shows up instead of vanishing.
@@ -57,19 +65,36 @@ class Comment:
         return f"{self.path}:{self.line}"
 
 
+def style_of(path: Path) -> str | None:
+    """The scanner for `path`: by suffix, then by name, then by a shell shebang on a suffix-less file."""
+    if path.suffix:
+        return SUPPORTED.get(path.suffix)
+    if path.name in NAMED:
+        return NAMED[path.name]
+    try:
+        with path.open(encoding="utf-8", errors="replace") as f:
+            first = f.readline()
+    except OSError:
+        return None
+    return "hash" if _SHEBANG.match(first) else None
+
+
 def supported(path: Path) -> bool:
-    return path.suffix in SUPPORTED
+    return style_of(path) is not None
 
 
 def extract(path: Path) -> list[Comment]:
     source = path.read_text()
     lines = source.splitlines()
-    style = SUPPORTED.get(path.suffix)
+    style = style_of(path)
     if style == "python":
         blocks = _hash_blocks(source) + _docstrings(source)
         field = _PY_FIELD
     elif style == "hash":
         blocks = _line_blocks(lines, ("#",), doc_prefix=None)
+        if blocks and blocks[0][0] == 1 and lines and lines[0].startswith("#!"):
+            first = _without_shebang(blocks[0])
+            blocks[0:1] = [first] if first else []
         field = _HASH_FIELD
     else:
         blocks = _c_style_blocks(lines)
@@ -84,6 +109,14 @@ def extract(path: Path) -> list[Comment]:
         label = kind == "comment" and start == end and field.match(nxt) is not None
         out.append(Comment(path, start, end, kind, text, context, label))
     return out
+
+
+def _without_shebang(block: Block) -> Block | None:
+    """The block minus its first line, or None when the shebang was the whole block."""
+    start, end, kind, text = block
+    if start == end:
+        return None
+    return start + 1, end, kind, text.split("\n", 1)[1]
 
 
 def _hash_blocks(source: str) -> list[Block]:

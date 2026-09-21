@@ -14,7 +14,7 @@ import os
 import sys
 from pathlib import Path
 
-from comment_lint.extract import SUPPORTED, Comment, extract, extract_diff, supported
+from comment_lint.extract import NAMED, SUPPORTED, Comment, extract, extract_diff, supported
 from comment_lint.rules import questions
 
 MODEL = "jev-latest"
@@ -55,7 +55,8 @@ def main(argv: list[str] | None = None) -> int:
     if skipped:
         print(
             f"not reviewed (no extractor): {', '.join(str(p) for p in skipped)}; "
-            f"supported: {', '.join(sorted(s.lstrip('.') for s in SUPPORTED))}",
+            f"supported: {', '.join(sorted(s.lstrip('.') for s in SUPPORTED))}, "
+            f"{', '.join(sorted(NAMED))}, and suffix-less files with a shell shebang",
             file=sys.stderr,
         )
 

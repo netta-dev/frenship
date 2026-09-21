@@ -24,4 +24,4 @@ Apply 1 or 2 through the symlink, and say it's an uncommitted change to the glob
 
 ## Report
 
-`build.md` step 8 carries the skipped findings as usual. When the comment-reviewer ran, add the evaluation table from `codex.md` with columns prose-reviewer / comment-reviewer; when Codex ran, its own.
+`build.md` step 8 carries the skipped findings as usual, plus the comment-reviewer's **Still flagged after 3 rounds** list verbatim when it has one. When the comment-reviewer ran, add the evaluation table from `codex.md` with columns prose-reviewer / comment-reviewer; when Codex ran, its own.

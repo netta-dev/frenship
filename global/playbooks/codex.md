@@ -2,7 +2,7 @@
 
 Run one of `~/.claude/agents/` on OpenAI Codex, alongside the Claude subagent. Evaluation phase: opt-in (Pick), read-only agents only, single passes only — never inside a review loop's rounds — and the caller reports which agent found what (see Evaluation report).
 
-Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4 and `comment-review.md`.
+Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4 and `comment-review.md`. The comment-reviewer's rewrites also run on Sol (medium), one batched ad-hoc prompt per pass, not an agent file; pinned, not offered.
 
 ## The call
 
