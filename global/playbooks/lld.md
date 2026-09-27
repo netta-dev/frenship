@@ -103,7 +103,7 @@ class FooScope extends StatefulWidget {
 
 ## Test plan
 
-*Concrete run commands; manual smoke notes if applicable.*
+*Concrete run commands; manual smoke notes if applicable. A phase integrating a real external system plans a live smoke test.*
 
 ```
 ./claude/run-tests.sh test/path/foo_test.dart

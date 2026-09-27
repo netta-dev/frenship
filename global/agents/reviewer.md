@@ -28,10 +28,10 @@ On a large diff, fan out per-area read passes to your own subagents, then judge 
 
 - **Scope discipline** — stayed on plan?
 - **Convention adherence** — global + workspace (DRY, style, naming, comments, etc.)
-- **Test coverage** for the change
+- **Test coverage** for the change. A regression test pins exact expected values; an inequality that the regression also passes is a must-fix.
 - **Dead code** — anything kept "for reference" must name a live consumer or documented future use
 - **Non-obvious approach** — a workaround, hack, or unusual construction that the plan doesn't call for and no comment explains
-- **In-file structure** — an edited element keeps the form of its siblings in the same file. Flag only when you can name what the uniformity is for. Comments and prose always follow `conventions.md` / `prose.md`.
+- **In-file structure** — an edited element keeps the form of its siblings in the same file. Flag only when you can name what the uniformity is for. Comments and prose always follow `conventions.md` / `prose.md`. A comment citing a design doc, decision number or review round is a must-fix.
 
 ## Procedure
 

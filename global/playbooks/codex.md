@@ -2,7 +2,7 @@
 
 Run one of `~/.claude/agents/` on OpenAI Codex, alongside the Claude subagent. Evaluation phase: opt-in (Pick), read-only agents only, single passes only — never inside a review loop's rounds — and the caller reports which agent found what (see Evaluation report).
 
-Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4 and `comment-review.md`. The comment-reviewer's rewrites also run on Sol (medium), one batched ad-hoc prompt per pass, not an agent file; pinned, not offered.
+Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4 and `comment-review.md`. The comment-reviewer's rewrites run on Sol (high), one batched ad-hoc prompt per pass, not an agent file; pinned, not offered.
 
 ## The call
 
@@ -26,16 +26,16 @@ codex exec -C <repo-or-worktree> -s read-only --ephemeral \
 
 Offer only the models and effort levels listed here, even if the catalog exposes others.
 
-| Model | Pass as | Effort levels | Default |
-|---|---|---|---|
-| GPT-5.6 Sol | `gpt-5.6-sol` | low · medium · high · xhigh | low |
-| GPT-6 Astra | `gpt-6-astra` | low · medium · high · xhigh | low |
+| Model       | Pass as       | Effort levels               | Default |
+| ----------- | ------------- | --------------------------- | ------- |
+| GPT-6 Sol   | `gpt-6-sol`   | low · medium · high · xhigh | low     |
+| GPT-6 Astra | `gpt-6-astra` | low · medium · high · xhigh | low     |
 
 Always the full slug; `sol` alone is rejected. The list is `~/.codex/models_cache.json` — re-read it when a slug fails. Runs bill the ChatGPT subscription, not an API key.
 
 ## Pick
 
-Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex override: prose-reviewer and comment-reviewer = Sol (medium); ask yes/no.
+Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex override: prose-reviewer and comment-reviewer = Sol (high); ask yes/no.
 
 ## Evaluation report
 

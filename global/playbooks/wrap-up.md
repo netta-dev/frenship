@@ -25,7 +25,7 @@ The doc is a **promotion queue**, not a project retro (`docs/designs/<project-na
 
 **Pass 1 — prune to generalizable candidates.** Delete anything that isn't a candidate workflow change: per-step "None"/narrative recaps, and findings already fixed in code that surface no *process* lesson (those live in the code + design doc). Drop now-empty sections.
 
-**Pass 2 — resolve every survivor.** Each is one addressable item with exactly one `- [ ] Resolution:` line — add one to any item missing it (items with *no* resolution line count, not just empty ones). Propose resolutions per `~/.claude/playbooks/workflow-lessons.md`: a concrete generalizable change or `SKIP`, never a fix status (`Fixed`/`Done`/`Refactored` is not a resolution). Leave every box unticked (the human ticks). Review loop per `~/.claude/playbooks/iterative-review.md`.
+**Pass 2 — resolve every survivor.** Each is one addressable item with exactly one `- [ ] Resolution:` line — add one to any item missing it (items with *no* resolution line count, not just empty ones). Propose resolutions per `~/.claude/playbooks/workflow-lessons.md`: a concrete generalizable change or `SKIP`, never a fix status (`Fixed`/`Done`/`Refactored` is not a resolution). Leave every box unticked (the human ticks). Review loop per `~/.claude/playbooks/iterative-review.md`. The propose→review loop is the approval channel, prunes included; don't gate the draft behind a question.
 
 Wrap-up-specific status keywords (additional to the playbook's set):
 - *(no prefix)* — apply locally (workspace `CLAUDE.md`, `.claude/context/*`, etc.).
@@ -47,7 +47,7 @@ Show a final progress line — **`All phases + wrap-up complete`**
 
 ## 6. Status update + archive
 
-If a design doc exists (HLD or DD), edit its `Status` line to `Project complete`. Then, if `docs/designs/<project-name>/` exists (an inline-plan `/dev` project may have none), `git mv docs/designs/<project-name> docs/designs/done/<project-name>` (step 7's commit picks it up) — `docs/designs/` root keeps only arch docs and in-flight projects. Arch docs never move; they're the living system reference.
+If a design doc exists (HLD or DD), edit its `Status` line to `Project complete` and strip the design-stash link from its `Companions` line. Then, if `docs/designs/<project-name>/` exists (an inline-plan `/dev` project may have none), `git mv docs/designs/<project-name> docs/designs/done/<project-name>` (step 7's commit picks it up) — `docs/designs/` root keeps only arch docs and in-flight projects. Arch docs never move; they're the living system reference.
 
 ## 7. Commit
 

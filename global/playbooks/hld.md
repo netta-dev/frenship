@@ -41,7 +41,7 @@ Fixed rows: `HLD` 10% (includes brainstorm), `Wrap-up` 5%, `Unexpected` 20%. Pha
 
 **Last reviewed**: YYYY-MM-DD
 **Status**: HLD (in progress)
-**Companions** *(create on first use; for a milestone, use-cases points to the arch project's; future is always the workspace's)*: [design-stash](design-stash.md) · [use cases](../use-cases-`project`.md) · [future](../future-`workspace`.md)
+**Companions** *(create on first use; for a milestone, use-cases points to the arch project's; future is always the workspace's; the design-stash link stays only while `Status` is `HLD (in progress)` — wrap-up strips it)*: [design-stash](design-stash.md) · [use cases](../use-cases-`project`.md) · [future](../future-`workspace`.md)
 
 ## Overview
 

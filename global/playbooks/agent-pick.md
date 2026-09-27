@@ -26,12 +26,12 @@ Rules:
 
 ## Models
 
-| Model | Pass as | $/MTok in/out | Reach for it when |
-|---|---|---|---|
-| Haiku 4.5 | `haiku` | 1 / 5 | Bulk mechanical work — rename sweeps, reformats, delete sweeps, wide greps. Near-zero reasoning per file. |
-| Sonnet 5 | `sonnet` | 3 / 15 | Standard feature work; near-Opus quality on coding and agentic tasks. The default working model. |
-| Opus 5 | `opus` | 5 / 25 | Multi-file features, larger refactors, end-to-end feature work. The margin over Sonnet shows on hard tasks, not on easy edits. |
-| Fable 5 | `fable` | 10 / 50 | Hardest long-horizon work — overnight autonomous runs, first-shot builds of a well-specified system, large migrations. Turns can run many minutes. |
+| Model     | Pass as  | $/MTok in/out | Reach for it when                                                                                                                                  |
+| --------- | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Haiku 4.5 | `haiku`  | 1 / 5         | Bulk mechanical work — rename sweeps, reformats, delete sweeps, wide greps. Near-zero reasoning per file.                                          |
+| Sonnet 5  | `sonnet` | 3 / 15        | Standard feature work; near-Opus quality on coding and agentic tasks. The default working model.                                                   |
+| Opus 5    | `opus`   | 5 / 25        | Multi-file features, larger refactors, end-to-end feature work. The margin over Sonnet shows on hard tasks, not on easy edits.                     |
+| Fable 5   | `fable`  | 10 / 50       | Hardest long-horizon work — overnight autonomous runs, first-shot builds of a well-specified system, large migrations. Turns can run many minutes. |
 
 **Haiku takes no effort level** — `effort` errors on Haiku 4.5; offer it bare.
 

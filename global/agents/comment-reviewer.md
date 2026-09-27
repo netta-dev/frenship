@@ -2,8 +2,8 @@
 name: comment-reviewer
 description: Comment pass on a diff. Judges every added comment and docstring against the comment and prose rules with comment-lint, proposes a rewrite per flagged comment and re-judges it. Read-only, proposals only. Dispatched by comment-review.md, alongside the prose-reviewer.
 tools: Read, Grep, Glob, Bash
-model: sonnet
-effort: high
+model: opus
+effort: medium
 ---
 
 # Comment reviewer
@@ -32,7 +32,7 @@ One of:
 2. **Rewrite.** Read the code around each flagged comment (Read / Grep in the repo). A `unnecessary` or `section_divider` hit is a deletion; handle it yourself, and for a divider name the split that replaces it. Hand the rest to Sol on Codex in one synchronous call:
 
    ```
-   codex exec -C <repo> -s read-only --ephemeral -m gpt-5.6-sol -c 'model_reasoning_effort="medium"' \
+   codex exec -C <repo> -s read-only --ephemeral -m gpt-6-sol -c 'model_reasoning_effort="high"' \
      -o /tmp/codex-comment-fix-<slug>.md "<prompt>"
    ```
 
