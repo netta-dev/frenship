@@ -41,7 +41,7 @@ Ask: "Anything else to address before we wrap up?" Handle whatever comes up. Cha
 
 ## 5. HLD sync + final progress
 
-HLD projects only — a `/dev` project has no phases, skip to §6. Append each phase's commit hash to its heading — `### Phase N — Title (X%) · <shorthash>`. Use the `phase N:` commit; ignore straggler/workspace commits.
+HLD projects only — a `/dev` project has no phases, skip to §6. Append each phase's commit hash to its heading — `### Phase N — Title (X%) · <shorthash>`. Use the implementation commit (`<project>: phase N — <title>`), not the plan commit (`phase N lld`); ignore straggler/workspace commits.
 
 Show a final progress line — **`All phases + wrap-up complete`**
 
