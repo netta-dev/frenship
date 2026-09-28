@@ -31,6 +31,7 @@ Shortcuts I type; when I do, apply the expansion:
 ## Git
 
 - `git add -N <file>` immediately after creating any file you'll commit — so `git diff` shows it.
+- Read `~/.claude/commands/commit.md` before committing.
 
 ## Lists
 
