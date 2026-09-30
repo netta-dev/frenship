@@ -15,7 +15,7 @@ Two candidates, numbered, with a recommendation and the reason for it:
 > ❓ (1 - rec) `<model>` (`<effort>`) or (2) `<model>` (`<effort>`) to implement this?
 > `<reason for the recommendation>`
 
-The pair can vary along either axis, or both — `opus (high)` vs `opus (xhigh)` (same model, more thinking), `opus (medium)` vs `sonnet (high)` (cheaper model, harder thinking), `fable (medium)` vs `opus (xhigh)` (top tier vs. the workhorse). Pick the two that actually bracket this task; don't reach for a habitual pair.
+The pair can vary along either axis, or both — `opus (high)` vs `opus (xhigh)` (same model, more thinking), or, where Fable is offered, `fable (medium)` vs `opus (xhigh)` (top tier vs. the workhorse). Pick the two that actually bracket this task; don't reach for a habitual pair.
 
 Rules:
 
@@ -26,14 +26,10 @@ Rules:
 
 ## Models
 
-| Model     | Pass as  | $/MTok in/out | Reach for it when                                                                                                                                  |
-| --------- | -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Haiku 4.5 | `haiku`  | 1 / 5         | Bulk mechanical work — rename sweeps, reformats, delete sweeps, wide greps. Near-zero reasoning per file.                                          |
-| Sonnet 5  | `sonnet` | 3 / 15        | Standard feature work; near-Opus quality on coding and agentic tasks. The default working model.                                                   |
-| Opus 5    | `opus`   | 5 / 25        | Multi-file features, larger refactors, end-to-end feature work. The margin over Sonnet shows on hard tasks, not on easy edits.                     |
-| Fable 5   | `fable`  | 10 / 50       | Hardest long-horizon work — overnight autonomous runs, first-shot builds of a well-specified system, large migrations. Turns can run many minutes. |
-
-**Haiku takes no effort level** — `effort` errors on Haiku 4.5; offer it bare.
+| Pass as | Reach for it when |
+| ------- | ----------------- |
+| `opus`  | The default for every dispatch. Bracket a task by effort: `opus (high)` vs `opus (xhigh)`. |
+| `fable` | Offer only for a final review pass (`design-doc.md` §G5, `build.md` step 4) and the optioneer. |
 
 ## Effort
 

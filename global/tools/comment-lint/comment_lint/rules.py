@@ -50,6 +50,8 @@ PROSE_RULES: dict[str, str] = {
     "'a real X'.",
     "P14_inferable": "States what the reader can infer: a justification, a restatement, or an "
     "illustrative example when the why is plain.",
+    "P15_oxford_comma": "Missing Oxford comma: a list of three or more has no comma before its "
+    "final 'and'/'or', e.g. 'lint, tests and types'.",
 }
 
 

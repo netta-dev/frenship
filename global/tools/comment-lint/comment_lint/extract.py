@@ -2,7 +2,7 @@
 
 Python: `#` blocks via `tokenize`, docstrings via `ast`. Dart and proto: `//` blocks,
 `///` doc blocks, and `/* */` blocks via a small scanner that skips string literals.
-Hash-comment files are found by suffix, by name (`Dockerfile`), or by a shell shebang when the
+Hash-comment files are found by name (`Dockerfile`), by suffix, or by a shell shebang when the
 file has no suffix; the shebang line itself is not a comment. Consecutive lines of one kind merge
 into a block. In diff mode only blocks that overlap
 an added line survive, so the review sees what the change wrote.
@@ -29,8 +29,10 @@ SUPPORTED = {
     ".conf": "hash", ".sh": "hash", ".bash": "hash", ".zsh": "hash",
 }
 
-# Files found by name rather than suffix.
-NAMED = {"Dockerfile": "hash", "Containerfile": "hash", "Makefile": "hash"}
+# Files found by name rather than suffix, checked first: `.env.example`'s suffix is `.example`.
+NAMED = {
+    "Dockerfile": "hash", "Containerfile": "hash", "Makefile": "hash", ".env.example": "hash",
+}
 
 # A first line naming a shell marks a suffix-less script as a hash-comment file.
 _SHEBANG = re.compile(r"^#!\s*\S*(?:/|\s)(?:ba|z|da|k)?sh\b|^#!\s*\S*/env\s+(?:ba|z|da|k)?sh\b")
@@ -66,11 +68,11 @@ class Comment:
 
 
 def style_of(path: Path) -> str | None:
-    """The scanner for `path`: by suffix, then by name, then by a shell shebang on a suffix-less file."""
-    if path.suffix:
-        return SUPPORTED.get(path.suffix)
+    """The scanner for `path`: by name, then by suffix, then by a shell shebang on a suffix-less file."""
     if path.name in NAMED:
         return NAMED[path.name]
+    if path.suffix:
+        return SUPPORTED.get(path.suffix)
     try:
         with path.open(encoding="utf-8", errors="replace") as f:
             first = f.readline()

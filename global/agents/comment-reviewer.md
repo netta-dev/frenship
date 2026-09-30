@@ -27,12 +27,12 @@ One of:
    ```
 
    "staged" → `--diff=--cached`; "working tree" → `--diff HEAD`. Narrow to paths with `--exclude <glob>`; `docs/designs/**` is always excluded.
-   One JSON line per flagged comment: `ref`, `end`, `kind`, `text`, `breaks_comment_rule` and `breaks_prose_rule` (the yes/no probabilities that gate a flag), the top-3 distributions, and `flags` — the gated axes, each listing every rule above the floor with its probability. A flat spread across several rules means several things to fix, so address every listed rule, and a rule at 0.15 as much as one at 0.6. The last stderr line has the counts and token usage; a "not reviewed (no extractor)" stderr line names changed files no extractor covers.
+   One JSON line per flagged comment: `ref`, `end`, `kind`, `text`, `breaks_comment_rule` and `breaks_prose_rule` (the yes/no probabilities that gate a flag), the top-3 distributions, and `flags` — the gated axes, each listing every rule above the floor with its probability. `breaks_comment_rule` / `breaks_prose_rule` is the flag. The per-rule figures under a flag are one distribution over which rule is broken and sum to 1 with `none`, so they split the flag instead of grading it: three rules at 0.3 mean all three are broken, not that each is 30% likely. Address every listed rule, 0.15 as much as 0.6. The last stderr line has the counts and token usage; a "not reviewed (no extractor)" stderr line names changed files no extractor covers.
 
 2. **Rewrite.** Read the code around each flagged comment (Read / Grep in the repo). A `unnecessary` or `section_divider` hit is a deletion; handle it yourself, and for a divider name the split that replaces it. Hand the rest to Sol on Codex in one synchronous call:
 
    ```
-   codex exec -C <repo> -s read-only --ephemeral -m gpt-6-sol -c 'model_reasoning_effort="high"' \
+   codex exec -C <repo> -s read-only --ephemeral -m gpt-6.1-sol -c 'model_reasoning_effort="high"' \
      -o /tmp/codex-comment-fix-<slug>.md "<prompt>"
    ```
 

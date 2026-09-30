@@ -125,9 +125,9 @@ Routing rule while brainstorming or writing: too-low-altitude detail → design-
 
 1. Invoke the design-reviewer subagent (Task, `subagent_type: design-reviewer`). Pass: doc path, doc type, project name. It returns categorized findings (must-fix / suggestion / nit) with section refs.
 2. Apply the findings yourself — every must-fix, and suggestions and nits at your judgment. No triage with the human mid-loop.
-3. Re-invoke a **fresh** design-reviewer at the first one's model + effort; loop until a review returns nothing new beyond what you already skipped.
+3. Re-invoke a **fresh** design-reviewer at the first one's model + effort, passing it a short log of prior findings and their disposition (fixed / skipped, with the reason); loop until a review returns nothing new beyond what you already skipped.
 4. Once the loop converges, run the prose-reviewer subagent (Task, `subagent_type: prose-reviewer`), passing the doc path — it pins its own model + effort — and a Codex one if she opts in (`~/.claude/playbooks/codex.md` Pick). One pass, never in the same turn as a review round. Unconditional, because it catches the fix accretion the loop itself caused (§H). Apply its findings the same way.
-5. Then *offer* one final design-reviewer pass on Fable, effort per `~/.claude/playbooks/agent-pick.md`, and a Codex one per `~/.claude/playbooks/codex.md` (Pick). Never auto-run.
+5. Then *offer* one final design-reviewer pass on Fable, effort per `~/.claude/playbooks/agent-pick.md`, and a Codex one per `~/.claude/playbooks/codex.md` (Pick). Never auto-run. The final pass gets the doc alone, without the log. If you apply any of its findings (or the Codex pass's), run the step 3 loop again until it converges. Don't offer a second final pass.
 6. Report to the human: the non-nit findings you skipped, one line each with why, plus anything you fixed in a way that isn't the straightforward one, plus the evaluation report (`codex.md`) for any Codex pass. Fixed findings aren't listed — they're in the diff she reviews.
 
 ## H. Fix accretion

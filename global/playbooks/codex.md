@@ -7,7 +7,7 @@ Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md
 ## The call
 
 ```
-codex exec -C <repo-or-worktree> -s read-only --ephemeral \
+codex exec -C <repo-or-worktree> -s <sandbox> --ephemeral \
   -m <model> -c 'model_reasoning_effort="<effort>"' \
   -o /tmp/codex-<agent>-<slug>.md \
   "$(sed '1{/^---$/!q};1,/^---$/d' ~/.claude/agents/<agent>.md)
@@ -16,6 +16,7 @@ codex exec -C <repo-or-worktree> -s read-only --ephemeral \
 ```
 
 - `-C` is the same directory the Claude subagent works in. In a worktree project that's the worktree.
+- Use `workspace-write` for the code reviewer so checked-in tests can create temporary files and caches, as they can for the Claude reviewer. Use `read-only` for the other roles. The code reviewer remains a read-only role by instruction: it may run tests but must not edit source files. Check `git diff HEAD` and `git status` again after both runs and resolve any unexpected changes before using either report.
 - Run it with Bash `run_in_background` in the same turn as the Claude dispatch; read the `-o` file when the completion notification arrives. The turn ends while both run — the ⏳ rule applies.
 - Keep reviewed files unchanged until both runs finish. Check Codex's exit status before using its report.
 - The prompt is the agent file's body with the frontmatter stripped.
@@ -28,14 +29,14 @@ Offer only the models and effort levels listed here, even if the catalog exposes
 
 | Model       | Pass as       | Effort levels               | Default |
 | ----------- | ------------- | --------------------------- | ------- |
-| GPT-6 Sol   | `gpt-6-sol`   | low · medium · high · xhigh | low     |
+| GPT-6.1 Sol | `gpt-6.1-sol` | low · medium · high · xhigh | low     |
 | GPT-6 Astra | `gpt-6-astra` | low · medium · high · xhigh | low     |
 
 Always the full slug; `sol` alone is rejected. The list is `~/.codex/models_cache.json` — re-read it when a slug fails. Runs bill the ChatGPT subscription, not an API key.
 
 ## Pick
 
-Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex override: prose-reviewer and comment-reviewer = Sol (high); ask yes/no.
+Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex overrides: prose-reviewer and comment-reviewer = Sol (high), ask yes/no; the final-pass design-reviewer = Astra and the final-pass reviewer = Sol, offer two efforts.
 
 ## Evaluation report
 

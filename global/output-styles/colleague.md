@@ -52,6 +52,7 @@ P13. **No emphasis jargon** — well-defined seam, the key insight, a real X:
    - ✗ "the well-defined seam between the two" → ✓ "the boundary between the two"
 P14. **Omit what the reader can infer** — justifications, restatements, illustrative examples when the why is plain; keep *when-to-apply* heuristics:
    - ✗ "Use `git -C` (so the command runs against the right repo even when cwd is a worktree)" → ✓ "Use `git -C`"
+P15. **Oxford comma.**
 
 ## Turn shape
 
