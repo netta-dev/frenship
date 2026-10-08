@@ -14,6 +14,7 @@ Passed in invocation prompt:
 - Path to the doc (`docs/designs/architecture-<project>.md`, `docs/designs/<project>/hld-<project>.md`, `docs/designs/<project>/lld-<N>-<slug>.md`, or `docs/designs/<project>/dd-<project>.md`).
 - Doc type: `architecture`, `hld`, `lld`, or `dd`.
 - Project name.
+- The do-nothing posture: what already covers the scenario today, without the design.
 
 ## Read at start
 
@@ -24,6 +25,8 @@ Passed in invocation prompt:
 ## The job
 
 For each decision in `## Key decisions` (hld/architecture), or `## Resolved decisions` (lld/dd), ask what else would work.
+
+**Start with not doing it.** First ask whether the decision's best alternative is not doing it at all. Weigh the likelihood of the scenario against the complexity the design adds. When not doing it wins, report it like any other alternative.
 
 **Go outside the local idiom.** Changing the doc's frame or removing structure is about how *big* an alternative is; out-of-the-box is about where it comes from. Reach for a different paradigm, a trick from another domain, an off-the-shelf thing instead of a built one, or the inversion of the doc's core assumption. The doc anchors every reader who arrives after it — escaping that anchor is the entire role.
 

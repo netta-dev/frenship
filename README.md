@@ -16,7 +16,7 @@ Around them:
 - `global/playbooks/` — the step-by-step instructions a pipeline loads on demand.
 - `global/commands/` — the pipelines plus `/commit`, `/debug`, `/implement`, `/optioneer`, `/time-travel`.
 - `global/CLAUDE.md`, `conventions.md`, `prose.md` — how the main thread behaves, how code is written, how prose is written.
-- `global/output-styles/`, `hooks/`, `scripts/`, `tools/` — the output style, a commit-confirmation hook, and helper tools. The comment-lint tool reads its API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
+- `global/output-styles/`, `hooks/`, `scripts/`, `tools/` — the output style, a commit-confirmation hook, and helper tools. The comment-lint and jevsort tools read their API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
 
 Written for Claude Code. The playbooks pick models per step and can hand review or rewrite passes to other vendors' agents.
 

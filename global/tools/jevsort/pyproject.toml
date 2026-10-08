@@ -1,0 +1,19 @@
+[project]
+name = "jevsort"
+version = "0.1.0"
+description = "Rank up to 255 items by one question, using jev's probabilities over all of them at once."
+requires-python = ">=3.12"
+dependencies = ["typesafe-sdk>=0.6.0"]
+
+[project.scripts]
+jevsort = "jevsort.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["jevsort"]
