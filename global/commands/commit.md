@@ -5,7 +5,7 @@ description: Commit changes via git, gated by lint and tests from capabilities.m
 # /commit
 
 1. `git status`.
-2. If diff touches code: run declared **lint** / **test** in `capabilities.md`; refuse on failure.
+2. If diff touches code: run declared **lint** / **test** in `capabilities.md`, unpiped; refuse on failure.
 3. This skill commits the whole working tree; follow a playbook's own commit paths when it names them. Stage any untracked file that belongs in the commit, and keep build artifacts, caches and secrets in `.gitignore`. Don't quietly leave out a tracked change — if one doesn't belong, ask.
 4. If user-facing: propose `changelog` entry (under `## Unreleased`) and `user_guide` edits if declared.
    - `Fix:` lines describe behavior present in a previous release that's now corrected. Bugs introduced and fixed *during* a feature build don't belong. Audit: "would a user upgrading from the previous release notice this difference?"

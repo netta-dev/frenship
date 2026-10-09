@@ -21,7 +21,7 @@ A comment must save a competent engineer, working here under time pressure, from
 - Class/file comment: role in the system, cross-method invariants, lifecycle.
 - A comment lives once, next to the code that would invalidate it.
 - A reviewer's question resolves to the LLD, restructuring, or a comment if the answer is needed at the code.
-- Never cite a design doc, decision number or review round in a code comment.
+- Never cite a design doc, decision number, review round, or incident (by name or date) in a code comment.
 - Comments obey `~/.claude/prose.md`.
 - No tombstone comments — a comment describes present code, not what was removed or how it used to work. Same for dead deps: delete them; removal narration belongs in the design doc.
 - In over-commented code, bring the area you're working in to this bar. Delete unnecessary comments.

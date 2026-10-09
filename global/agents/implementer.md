@@ -11,7 +11,7 @@ Execute a bounded, pre-approved plan. No scope expansion.
 ## Invocation modes
 
 - **Implement**: the caller passes the approved design (LLD, DD, or inline plan). Execute it.
-- **Fix**: the caller passes plan + reviewer findings. Make targeted fixes for those findings only — don't re-implement, don't exceed findings' scope.
+- **Fix**: the caller passes plan + reviewer findings. Make targeted fixes for those findings only — don't re-implement, don't exceed findings' scope. Fix a `correctness` finding red-first, as `CLAUDE.md` §Code requires for any bug fix: first write a test that fails because of the bug the finding describes. If it passes on the unfixed code, the bug isn't there: leave the code and report the finding as not reproduced, naming the test. For a pattern finding, search for further instances under each spelling and fix them too.
 
 ## Read at start
 
@@ -33,8 +33,8 @@ Both modes:
 - Don't fix unrelated bugs/suggestions—include in observations.
 - Write tests for new code. After writing or modifying tests, run the full declared lint+test gate in `capabilities.md`, including the new test files.
 - New test file: get one test passing first (proves harness/imports), then add the rest.
-- Before wiring a vendor/library call, verify it against the installed package (signature, params, mode).
-- Delegate bulk-mechanical, context-heavy chunks to your own subagents. Keep the plan, the reasoning-heavy edits, the gate run and the return summary yourself.
+- Before wiring a vendor/library call, verify it against the installed package (signature, params, mode), found through the project's environment, never `find /`.
+- Delegate bulk-mechanical, context-heavy chunks to your own subagents. Keep the plan, the reasoning-heavy edits, the gate run and the return summary yourself. Wait for them by ending your turn, never a sleep loop.
 
 Implement mode only:
 - Update `capabilities.md` if work adds declarable capability (first harness, lint, UI toolkit) — only tooling a workflow skill invokes, not one-off phase commands.

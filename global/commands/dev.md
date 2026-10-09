@@ -27,7 +27,7 @@ Settle the slug, create + enter the worktree and run the toolchain check, all pe
 
 A. **Plan**
    1. **Brainstorm** — `~/.claude/playbooks/brainstorm.md`. Output: crystallized requirements. If abandoned, discard the worktree per `~/.claude/playbooks/worktree.md` (Discard).
-   2. **Design** — first do `~/.claude/playbooks/lld.md` Process steps 3–7 as far as the change warrants (read context and code, verify every external API relied on, grep the readers of any field whose semantics change, screenshot the current UI state). Append the brainstormed behavioral scenarios to the workspace's existing governing use-cases doc; with no such doc, they stay in the requirements. Then:
+   2. **Design** — first read `~/.claude/conventions.md` and the workspace's `.claude/context/conventions.md`, then do `~/.claude/playbooks/lld.md` Process steps 3–7 as far as the change warrants (read the other context and the code, verify every external API relied on, grep the readers of any field whose semantics change, screenshot the current UI state). Append the brainstormed behavioral scenarios to the workspace's existing governing use-cases doc; with no such doc, they stay in the requirements. Then:
       1. **Inline plan.** Present the plan as a numbered list of steps — files to touch, tests, the shape of the change — with its decisions called out. Fold in the design-stash items and any `docs/designs/future-<workspace>.md` item now in scope.
       2. **Doc or go.** Recommend one, with a one-line reason. Doc when the change spans subsystems, changes behavior someone else must review later, or the plan should outlive this chat. The human answers `go` or `dd`.
       3. **On `go`** — present the plan for approval; a clear yes → B.

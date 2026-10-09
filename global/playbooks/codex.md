@@ -1,8 +1,8 @@
 # Codex dispatch
 
-Run one of `~/.claude/agents/` on OpenAI Codex, alongside the Claude subagent. Evaluation phase: opt-in (Pick), read-only agents only, single passes only — never inside a review loop's rounds — and the caller reports which agent found what (see Evaluation report).
+Run one of `~/.claude/agents/` on OpenAI Codex, alongside the Claude subagent. Evaluation phase: opt-in (Pick), read-only agents only (except `comment-review.md`'s prose pass, which edits comments and docstrings), single passes only — never inside a review loop's rounds — and the caller reports which agent found what (see Evaluation report).
 
-Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4 and `comment-review.md`. The comment-reviewer's rewrites run on Sol (high), one batched ad-hoc prompt per pass, not an agent file; pinned, not offered.
+Callers: `/optioneer`; the final-pass offer and the prose pass in `design-doc.md` §G; the final-pass offer in `build.md` step 4. `comment-review.md`'s prose pass runs the prose-reviewer on Sol (high) in place of the Claude one, and the comment-reviewer's rewrites run on Sol (high), one batched ad-hoc prompt per pass, not an agent file; both are pinned, not offered.
 
 ## The call
 
@@ -21,7 +21,7 @@ codex exec -C <repo-or-worktree> -s <sandbox> --ephemeral \
 - Keep reviewed files unchanged until both runs finish. Check Codex's exit status before using its report.
 - The prompt is the agent file's body with the frontmatter stripped.
 - Tool names in the body (Read, Grep, Agent) are Claude's. Codex maps them to its own shell; a fan-out instruction it can't follow it does inline.
-- To stop a run: `pgrep -f 'codex exec'` and kill that pid. Never `pkill -f 'codex exec'` — the pattern matches the shell that issued it.
+- To stop a run: `pgrep -f '[c]odex exec'` and kill that pid. Never `pkill -f 'codex exec'` — the pattern matches the shell that issued it.
 
 ## Models
 
@@ -36,7 +36,7 @@ Always the full slug; `sol` alone is rejected. The list is `~/.codex/models_cach
 
 ## Pick
 
-Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex overrides: prose-reviewer and comment-reviewer = Sol (high), ask yes/no; the final-pass design-reviewer = Astra and the final-pass reviewer = Sol, offer two efforts.
+Follow agent-pick.md’s selection rules, using Codex models; add “no” as option 3. Claude frontmatter pins apply only to Claude. Codex overrides: prose-reviewer = Sol (high), ask yes/no; the final-pass design-reviewer = Astra and the final-pass reviewer = Sol, offer two efforts.
 
 ## Evaluation report
 

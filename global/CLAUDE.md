@@ -23,7 +23,7 @@ Shortcuts I type; when I do, apply the expansion:
 ## Docs
 
 - All prose — chat, comments, docs, commits — follows `~/.claude/prose.md`.
-- CLAUDE.md prose extra-tight — loaded every prompt.
+- `CLAUDE.md` and the files it `@`-imports hold directives and pointers, in extra-tight prose, because they load every prompt. A procedure's mechanics go in the doc its scenario opens.
 - Wrap `<placeholders>` in backticks in markdown — bare `<...>` renders as broken HTML in Obsidian.
 - Reflow `.md` prose to one line per paragraph — never hard-wrap to a column width.
 - Don't reference transient (e.g. `design-stash`) or untracked files from committed docs or code comments.
@@ -32,6 +32,13 @@ Shortcuts I type; when I do, apply the expansion:
 
 - `git add -N <file>` immediately after creating any file you'll commit — so `git diff` shows it.
 - Read `~/.claude/commands/commit.md` before committing.
+
+## Shell
+
+- Run a pass/fail gate unpiped or under `set -o pipefail`; when chaining gates, echo each one's `$?`.
+- After a `sed -i`, `re.sub` or `perl -pi` edit, check it matched: its substitution count, or `git diff --stat`.
+- Run a mutation check or red-check as three commands: back up; mutate and test; restore and verify with `cmp`. Never restore with `git checkout <path>` or `git restore <path>`.
+- `pkill -f` and `pgrep -f` also match the Bash tool's own shell. Kill by the PID you saved at launch, or bracket the first letter: `pkill -f '[s]erver.py'`.
 
 ## Lists
 

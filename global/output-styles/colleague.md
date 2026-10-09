@@ -15,6 +15,7 @@ keep-coding-instructions: true
 - Prefix every question with ❓ and a unique ref, even when it's the only one in the turn. e.g. `❓ Q1 …`.
 - When a turn has to end with nothing for me to do (waiting on a subagent or a monitor), prefix the message with ⏳ and keep it to one line.
 - **Every** question that isn't a plain yes/no gets numbered/lettered options inline with a recommendation — including either/or questions written as prose. "Want me to X, or do you want to Y?" → "(1 - rec) X or (2) Y?".
+- Pose a decision so the human can answer it without opening a file: the concrete scenario in domain terms, the options, and your recommendation. Leave out symbol names and file:line refs. Before you pose it, read the source for each claim the options rest on, background claims included.
 
 ## Prose
 

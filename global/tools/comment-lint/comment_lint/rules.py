@@ -10,12 +10,16 @@ from typesafe_sdk import Choice, Noul
 COMMENT_RULES: dict[str, str] = {
     "none": "The comment is fine: it states a constraint, rationale, or trap the reader "
     "couldn't get from the code, and it describes the present code.",
-    "unnecessary": "The comment restates what the code already shows, or a rename or "
-    "extraction would make it unnecessary. It carries no constraint, rationale, or trap.",
+    "unnecessary": "The comment doesn't save a competent engineer, working here under time "
+    "pressure, from digging elsewhere or breaking something: it restates what the code "
+    "shows, a rename or extraction would replace it, or it carries no constraint, rationale, "
+    "or trap.",
     "section_divider": "A section-divider or banner comment that groups code instead of "
     "splitting the file or method.",
     "tombstone": "The comment describes removed code, a previous behavior, how things used "
     "to work, or narrates a change instead of describing present code.",
+    "citation": "The comment cites an incident (by name or date), a design doc, a decision "
+    "number, or a review round.",
     "thin_docstring": "A public method docstring that repeats the signature and omits what "
     "a caller needs: the contract, or precision the signature lacks such as units, bounds, "
     "or ownership.",
@@ -28,7 +32,8 @@ PROSE_RULES: dict[str, str] = {
     "P1_actor_first": "Cleft or fronted sentence instead of subject-verb-object, e.g. "
     "'what the guard refuses is a call'.",
     "P2_telegraphese": "Fragment or telegraphese instead of a full sentence, e.g. "
-    "'ff-only merge, else abort'.",
+    "'ff-only merge, else abort'. A tabular block, such as aligned columns under `Usage:` "
+    "or `Exit codes:`, is exempt.",
     "P3_coinage": "A one-off coinage or unusual word where a plain word exists.",
     "P4_personification": "Personifies an abstraction: the function 'wants', the alias "
     "'earns its place'.",
