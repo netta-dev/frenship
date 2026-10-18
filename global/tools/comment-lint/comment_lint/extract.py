@@ -3,7 +3,8 @@
 Python: `#` blocks via `tokenize`, docstrings via `ast`. Dart and proto: `//` blocks,
 `///` doc blocks, and `/* */` blocks via a small scanner that skips string literals.
 Hash-comment files are found by name (`Dockerfile`), by suffix, or by a shell shebang when the
-file has no suffix; the shebang line itself is not a comment. Consecutive lines of one kind merge
+file has no suffix, and a suffix-less file with a Python shebang is a Python file; the shebang line
+itself is not a comment. Consecutive lines of one kind merge
 into a block. In diff mode only blocks that overlap
 an added line survive, so the review sees what the change wrote.
 """
@@ -34,8 +35,10 @@ NAMED = {
     "Dockerfile": "hash", "Containerfile": "hash", "Makefile": "hash", ".env.example": "hash",
 }
 
-# A first line naming a shell marks a suffix-less script as a hash-comment file.
+# A first line naming a shell marks a suffix-less script as a hash-comment file, and one naming
+# Python (`env python3`, `env -S uv run python`) as a Python file.
 _SHEBANG = re.compile(r"^#!\s*\S*(?:/|\s)(?:ba|z|da|k)?sh\b|^#!\s*\S*/env\s+(?:ba|z|da|k)?sh\b")
+_PY_SHEBANG = re.compile(r"^#!.*\bpython[0-9.]*\b")
 
 # Changed files that carry no code comments, skipped without a word. Any other unsupported
 # file is reported, so a language nobody thought of shows up instead of vanishing.
@@ -68,7 +71,8 @@ class Comment:
 
 
 def style_of(path: Path) -> str | None:
-    """The scanner for `path`: by name, then by suffix, then by a shell shebang on a suffix-less file."""
+    """The scanner for `path`: by name, then by suffix, then by a shell or Python shebang on a
+    suffix-less file."""
     if path.name in NAMED:
         return NAMED[path.name]
     if path.suffix:
@@ -78,7 +82,9 @@ def style_of(path: Path) -> str | None:
             first = f.readline()
     except OSError:
         return None
-    return "hash" if _SHEBANG.match(first) else None
+    if _SHEBANG.match(first):
+        return "hash"
+    return "python" if _PY_SHEBANG.match(first) else None
 
 
 def supported(path: Path) -> bool:
@@ -94,14 +100,14 @@ def extract(path: Path) -> list[Comment]:
         field = _PY_FIELD
     elif style == "hash":
         blocks = _line_blocks(lines, ("#",), doc_prefix=None)
-        if blocks and blocks[0][0] == 1 and lines and lines[0].startswith("#!"):
-            first = _without_shebang(blocks[0])
-            blocks[0:1] = [first] if first else []
         field = _HASH_FIELD
     else:
         blocks = _c_style_blocks(lines)
         field = _C_FIELD
     blocks.sort(key=lambda b: b[0])
+    if blocks and blocks[0][0] == 1 and lines and lines[0].startswith("#!"):
+        first = _without_shebang(blocks[0])
+        blocks[0:1] = [first] if first else []
     out = []
     for start, end, kind, text in blocks:
         lo = max(0, start - 1 - BEFORE)

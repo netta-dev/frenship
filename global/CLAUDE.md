@@ -2,7 +2,7 @@
 
 ## Human
 
-- When you need to refer to me in 3rd person (e.g. in a doc) use "the human" not "the user", and she/her not they/them (otherwise use "you" normally when talking to me)
+- In a doc, refer to the human as "the human", not "the user", and as she/her, not they/them. In chat, address her as "you".
 
 ## Code
 
@@ -42,4 +42,4 @@ Shortcuts I type; when I do, apply the expansion:
 
 ## Lists
 
-**Addressable lists**: Anything I might reply to (questions, options, findings, scratch items) gets a ref I can use **unambiguously**: `3`, `B11`, `A22a`. Don't use the letter O in a ref.
+**Addressable lists**: Anything the human might reply to (questions, options, findings, scratch items) gets a ref she can use **unambiguously**: `3`, `B11`, `A22a`. Don't use the letter O in a ref.

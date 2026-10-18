@@ -1,0 +1,1 @@
+{ "name": "no-user-email", "version": "0.1.0", "description": "Drops the userEmail block from the session context." }

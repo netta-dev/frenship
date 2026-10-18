@@ -16,11 +16,13 @@ Around them:
 - `global/playbooks/` — the step-by-step instructions a pipeline loads on demand.
 - `global/commands/` — the pipelines plus `/commit`, `/debug`, `/implement`, `/optioneer`, `/time-travel`.
 - `global/CLAUDE.md`, `conventions.md`, `prose.md` — how the main thread behaves, how code is written, how prose is written.
-- `global/output-styles/`, `hooks/`, `scripts/`, `tools/` — the output style, a commit-confirmation hook, and helper tools. The comment-lint and jevsort tools read their API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
+- `global/output-styles/`, `hooks/`, `mods/`, `scripts/`, `tools/` — the output style, hooks that confirm commits and block environment dumps, a mod that keeps your account email out of Claude's context, and helper tools. The comment-lint and jevsort tools read their API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
 
 Written for Claude Code. The playbooks pick models per step and can hand review or rewrite passes to other vendors' agents.
 
 ## Install
+
+Run Claude Code as its own user, not your main one; the clone and `~/.claude/` below are that user's.
 
 Clone, then symlink each entry of `global/` into `~/.claude/`:
 
@@ -31,6 +33,8 @@ for f in CLAUDE.md conventions.md prose.md commands agents playbooks scripts out
   ln -s ~/workspaces/frenship/global/$f $f
 done
 ```
+
+Merge `settings.example.json` into `~/.claude/settings.json` and replace `CLAUDE_USER` with that user's name. It registers the hooks and loads the mod.
 
 Then read `global/CLAUDE.md` and edit the parts that are personal: the pronouns line, the aliases. An installer that asks for these is planned.
 

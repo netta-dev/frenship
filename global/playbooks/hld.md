@@ -16,7 +16,7 @@ On HLD approval, tag each stash section `[→ phase N]` / `[→ cross-cutting]`.
 
 ## Output
 
-Write at `docs/designs/<project-name>/hld-<project-name>.md` (kebab-case). Use template below; delete italicized instructions, replace placeholders. Then alternatives + design review (below), present for approval. On approval: set `**Status**: HLD committed`, then `git add <path> && git commit <path> -m "<project-name>: hld"`. Each phase gets an LLD at `docs/designs/<project-name>/lld-<N>-<slug>.md` via `/engineer`.
+Write at `docs/designs/<project-name>/hld-<project-name>.md` (kebab-case). Use template below; delete italicized instructions, replace placeholders. Then alternatives + design review (below), present for approval. On approval: set `**Status**: HLD committed`, then `git add docs/designs && git commit docs/designs -m "<project-name>: hld"`. Each phase gets an LLD at `docs/designs/<project-name>/lld-<N>-<slug>.md` via `/engineer`.
 
 ## Alternatives, then design review
 
@@ -60,6 +60,10 @@ Fixed rows: `HLD` 10% (includes brainstorm), `Wrap-up` 5%, `Unexpected` 20%. Pha
 - **Another decision.** Statement.
 - **Decision with tradeoff.**
   - X over Y because Z. Y better at A, worse at B; B matters more.
+
+## Out of scope
+
+- Area — why it's out.
 
 ## Design
 

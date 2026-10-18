@@ -11,9 +11,9 @@ COMMENT_RULES: dict[str, str] = {
     "none": "The comment is fine: it states a constraint, rationale, or trap the reader "
     "couldn't get from the code, and it describes the present code.",
     "unnecessary": "The comment doesn't save a competent engineer, working here under time "
-    "pressure, from digging elsewhere or breaking something: it restates what the code "
-    "shows, a rename or extraction would replace it, or it carries no constraint, rationale, "
-    "or trap.",
+    "pressure, from digging elsewhere or from a mistake that the compiler, the tests, and the "
+    "next run wouldn't catch: it restates what the code shows, a rename or extraction would "
+    "replace it, or it carries no constraint, rationale, or trap.",
     "section_divider": "A section-divider or banner comment that groups code instead of "
     "splitting the file or method.",
     "tombstone": "The comment describes removed code, a previous behavior, how things used "
@@ -21,8 +21,8 @@ COMMENT_RULES: dict[str, str] = {
     "citation": "The comment cites an incident (by name or date), a design doc, a decision "
     "number, or a review round.",
     "thin_docstring": "A public method docstring that repeats the signature and omits what "
-    "a caller needs: the contract, or precision the signature lacks such as units, bounds, "
-    "or ownership.",
+    "a caller needs (the contract, or precision the signature lacks such as units, bounds, "
+    "or ownership), or that describes the mechanism.",
     "wrong_altitude": "A class or file comment that lists implementation details instead of "
     "the role in the system, cross-method invariants, or lifecycle.",
 }

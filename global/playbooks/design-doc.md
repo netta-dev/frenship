@@ -60,9 +60,9 @@ Every doc obeys `~/.claude/prose.md` (cite `P<n>`). Doc-specific rules, each wit
 1. **Content before provenance.** State the fact first; file its origin in a footnote or block.
    - ✗ "Carried over from the Q3 incident review: retries must be idempotent."
    - ✓ "Retries must be idempotent.[^1]" — footnote: "From the Q3 incident review."
-2. **Symbols in prose, coordinates in footnotes.** The symbol (`Class.method`) rides in the sentence; the file/line coordinate goes to a footnote, one per claim carrying all its coordinates rather than one per coordinate. Coordinates stay inline in exactly two places: **edit instructions** (Files/Tests — the coordinate is the operand) and **evidence blocks** (grep results — the coordinates are the content). Docs only — in chat, `file.py:42` is clickable, so coordinates ride inline there.
+2. **Symbols in prose, files in footnotes, no line numbers.** The symbol (`Class.method`) rides in the sentence and its file goes to a footnote; a claim backed by several files gets one footnote that lists them all. Edit instructions (Files/Tests) name the file and the symbol inline. Line numbers appear only in evidence blocks, as grep output.
    - ✗ "the abort resolves it (`executor.py:595`)"
-   - ✓ "`Executor.on_abort_entry` resolves it[^abort-loc]" — footnote: "`executor.py:595`"
+   - ✓ "`Executor.on_abort_entry` resolves it[^abort-loc]" — footnote: "`executor.py`"
 3. **Doc-process clauses fold, whatever their size.** Sentences about the document itself — approval scope, review conventions, playbook precedents — go to a **Context** block even at one clause; main text keeps what the *system* does. Diagnostic: process words in main text ("approval", "precedent", "recorded here", "per the playbook") mark a misfiled clause.
    - ✗ "The approved scope also includes, named here so approval covers all of it: …"
    - ✓ "The approved scope also includes: …" + a **Context** block: "none of these is named by a requirement; listing them here makes approval cover them."
@@ -109,6 +109,7 @@ Each playbook carries its own template; these conventions and block shapes are s
 
     The title is canonical downstream: its kebab-case slug names the next artifact (milestone → the `<project-name>` of its `/engineer` run; phase → `lld-<N>-<slug>.md`) and the title itself is the commit subject.
 5. **Effort table** — one row per stage plus the tier's fixed rows, summing to 100.
+6. **Out of scope** (HLD, LLD, DD). Record each call the human makes during a run in its section before the next step reads the doc.
 
 ## F. Companion docs
 
@@ -124,9 +125,9 @@ Routing rule while brainstorming or writing: too-low-altitude detail → design-
 ## G. Design review
 
 1. Invoke the design-reviewer subagent (Task, `subagent_type: design-reviewer`). Pass: doc path, doc type, project name. It returns categorized findings (must-fix / suggestion / nit) with section refs.
-2. Apply the findings yourself — every must-fix, and suggestions and nits at your judgment. No triage with the human mid-loop. A finding that cites a written rule is applied unless you quote a clause that permits the text; an earlier doc's violation is never grounds.
+2. Apply the findings yourself as targeted edits, not by regenerating the doc — every must-fix, and suggestions and nits at your judgment. No triage with the human mid-loop. A finding that cites a written rule is applied unless you quote a clause that permits the text; an earlier doc's violation is never grounds. Don't apply a finding that changes an answer the human gave in brainstorm or an open-question batch; put it to her as a question in the step 6 report, naming her answer.
 3. Re-invoke a **fresh** design-reviewer at the first one's model + effort, passing it a short log of prior findings and their disposition (fixed / skipped, with the reason), plus the paragraphs the last round's fixes added, to review as new text; loop until a review returns nothing new beyond what you already skipped.
-4. Once the loop converges, run the prose-reviewer subagent (Task, `subagent_type: prose-reviewer`), passing the doc path — it pins its own model + effort — and a Codex one if she opts in (`~/.claude/playbooks/codex.md` Pick). One pass, never in the same turn as a review round. Unconditional, because it catches the fix accretion the loop itself caused (§H). Apply its findings the same way.
+4. Once the loop converges, run the prose-reviewer subagent (Task, `subagent_type: prose-reviewer`), passing the doc path — it pins its own model + effort — and a Codex one if she opts in (`~/.claude/playbooks/codex.md` Pick). One pass, never in the same turn as a review round. Unconditional, because it catches the fix accretion the loop itself caused (§H). Apply its findings the same way. Run it again before the doc is presented or committed whenever an edit since its last run, other than its own fixes, added a paragraph or list item.
 5. Then *offer* one final design-reviewer pass on Fable, effort per `~/.claude/playbooks/agent-pick.md`, and a Codex one per `~/.claude/playbooks/codex.md` (Pick). Never auto-run. The final pass gets the doc alone, without the log. If you apply any of its findings (or the Codex pass's), run the step 3 loop again until it converges. Don't offer a second final pass.
 6. Report to the human: the non-nit findings you skipped, one line each with why, plus anything you fixed in a way that isn't the straightforward one, plus the evaluation report (`codex.md`) for any Codex pass. Fixed findings aren't listed — they're in the diff she reviews.
 
@@ -134,6 +135,5 @@ Routing rule while brainstorming or writing: too-low-altitude detail → design-
 
 1. The failure mode of the review loop: each round's clarification lands as an appended clause, negation, or parenthetical, and after N rounds the paragraph is a transcript of the argument rather than a statement of the result.
 2. After applying a round's fixes, reread each touched paragraph as a fresh reader; if a fix added a second negation or a second parenthetical to one sentence, rewrite the sentence.
-3. A fix that exists only to preempt a reviewer's misreading goes to an **Anticipated questions** block, not the main flow (P10).
-4. Worked signature, from a real doc: "Items 1 and 2 make one anti-confusion tripwire, from the two sides: `executor.py:367` and `:595` are **not** callers of…" — provenance first (§C1), a one-off coinage (P3), bare coordinates (§C2), and a rebuttal (P10), all in one sentence. Each clause was a correct review fix; the sentence is unreadable.
-5. Before handing the doc to review, self-pass the prose against `~/.claude/prose.md`.
+3. A fix that exists only to preempt a reviewer's misreading goes to an **Anticipated questions** block, not the main flow (P10). A fix that adds mechanism goes to Design, and the decision keeps a one-line pointer to it.
+4. Before handing the doc to review, self-pass the prose against `~/.claude/prose.md`.

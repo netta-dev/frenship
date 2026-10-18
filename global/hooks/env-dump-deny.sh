@@ -12,10 +12,36 @@
 #                                  .env.example and .env.sample
 #   grep                           on an env file, with -v or with a pattern that
 #                                  names no key
-# `env FOO=1 cmd` runs a command and passes. Like git-rewrite-ask.sh, it matches the
-# raw command string, split at shell separators.
+# `env FOO=1 cmd` runs a command and passes, and so does a heredoc body fed to anything
+# but a shell, ssh, eval, or a container exec: it's that program's data. Like
+# git-rewrite-ask.sh, it matches the raw command string, split at shell separators.
 CMD=$(jq -r '.tool_input.command // empty')
 [ -n "$CMD" ] || exit 0
+
+heredoc_re="(^|[^<])<<-?[[:space:]]*['\"]?([A-Za-z_][A-Za-z0-9_]*)"
+shell_like='bash|sh|zsh|dash|ksh|ssh|eval|docker|docker-compose|podman|kubectl'
+strip_data_heredocs() {
+  local line delim="" keep="" out="" word
+  local -a words
+  while IFS= read -r line; do
+    if [ -n "$delim" ]; then
+      [ -n "$keep" ] && out+="$line"$'\n'
+      [ "${line#"${line%%[!$'\t']*}"}" = "$delim" ] && delim=""
+      continue
+    fi
+    out+="$line"$'\n'
+    [[ $line =~ $heredoc_re ]] || continue
+    delim=${BASH_REMATCH[2]}
+    read -ra words <<< "$(printf '%s\n' "${line%%<<*}" | sed -E 's/.*(&&|\|\||[;|&()`])//')"
+    word=""
+    for word in "${words[@]}"; do
+      [[ $word == sudo || $word =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || break
+    done
+    [[ ${word##*/} =~ ^($shell_like)$ ]] && keep=1 || keep=""
+  done <<< "$1"
+  printf '%s' "$out"
+}
+CMD=$(strip_data_heredocs "$CMD")
 
 deny() {
   jq -cn --arg r "$1 would print secrets into the transcript. Read one setting by key, e.g. \`docker compose exec -T <service> printenv <KEY>\`." \

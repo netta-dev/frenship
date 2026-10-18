@@ -24,6 +24,7 @@ Write at `docs/designs/<project-name>/lld-<N>-<slug>.md` — `<N>` and `<slug>` 
 
 - A keep-as-reference / might-need-it skip must name a live consumer or documented future use; re-check after any same-change decision that could have removed the last consumer.
 - External-infra phases: fix the orchestrator-vs-human split up front — Claude drives everything reachable from shell + creds (provisioning, resource CRUD, headless validation); the human does only hardware (mic/voice) or browser (dashboard/account) steps.
+- As you write the plan, apply its HLD amendments and delete the design-stash items it integrates, rather than listing either in Files.
 
 ## Alternatives, then design review
 
@@ -35,7 +36,7 @@ Ask: **"❓ Ready to commit?"** Iterate via Edit on human pushback until clear a
 
 ## On approval
 
-1. **Commit**: bump the HLD's `Status` to `Phase <N> LLD committed`, then `git add <lld-path> <hld-path> && git commit <lld-path> <hld-path> -m "<project-name>: phase <N> lld — <title>"`. One commit, so no window exists where the plan is committed but `Status` still points at the previous phase.
+1. **Commit**: bump the HLD's `Status` to `Phase <N> LLD committed`, then `git add docs/designs && git commit docs/designs -m "<project-name>: phase <N> lld — <title>"`. One commit, so no window exists where the plan is committed but `Status` still points at the previous phase.
 2. **Integrate to main** per `~/.claude/playbooks/worktree.md` (Integrate) — doc-only like HLD approval, guarded (a no-op for a main-checkout project). Main's `Status` then reads `Phase <N> LLD committed` for every reader.
 3. **Continue vs. fresh session** — recommend starting the build here or `/exit`ing and re-running `/engineer` (Resume picks the committed LLD up at Pipeline B2). Judge by context budget, as `/engineer` does at a phase boundary. A clean cut-point: the plan is on disk and committed, so nothing is held in conversation.
 4. **Build** — `~/.claude/playbooks/build.md` with the approved LLD, in whichever session runs it. Don't edit files yourself; the build playbook dispatches the implementer.
@@ -65,6 +66,10 @@ Ask: **"❓ Ready to commit?"** Iterate via Edit on human pushback until clear a
 > Option A — why it lost. Option B — why it lost. One line each.
 
 2. **Decision.** …
+
+## Out of scope
+
+- Area — why it's out.
 
 ## Design
 

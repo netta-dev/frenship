@@ -91,7 +91,7 @@ Resolve the main-checkout root once: `MAIN="$(dirname "$(realpath "$(git rev-par
 3. **Back-merge main → branch** (in the worktree, on `eng/<project>`): `git merge main`. On conflict, stop and hand the conflicted files to the human — never auto-resolve (`-X ours/theirs` picks a side blind and could ship an unverified combination). After they resolve and commit, re-run the full declared suite (`capabilities.md`), not just the touched tests — the fused state is untested. Red → fix on the branch with new commits (never amend; the branch is synced history), re-verify, continue only once green. (A doc-only or tooling-only merge — caller 2 above — skips the re-verify.)
 4. **Fast-forward main:** `git -C "$MAIN" merge --ff-only eng/<project>`. Rejected → main advanced again or went dirty; re-run from step 1, which re-checks and either pauses or back-merges. `--ff-only` leaves main untouched on rejection, so retrying is safe.
 
-`git -C "$MAIN"` reaches the parent checkout from the worktree's permission scope — no scope switch needed.
+Session isolation refuses `git -C "$MAIN"` from the worktree. Run steps 1, 2, and 4 on the main checkout after `ExitWorktree(keep)`, and step 3 in the worktree after `EnterWorktree(path=…)`; re-enter the worktree after step 4.
 
 ## Resume entry
 

@@ -1,0 +1,74 @@
+{
+  "cleanupPeriodDays": 3650,
+  "env": {
+    "CLAUDE_CODE_PLUGIN_DIRS": "/home/CLAUDE_USER/workspaces/frenship/global/mods/no-user-email"
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "ask": [
+      "Bash(*git *commit*)"
+    ]
+  },
+  "disableClaudeAiConnectors": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/CLAUDE_USER/workspaces/frenship/global/hooks/git-rewrite-ask.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /home/CLAUDE_USER/workspaces/frenship/global/hooks/env-dump-deny.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\033]0;⏸ %s\\007' \"$(basename \"$PWD\")\" >/dev/tty 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\033]0;%s\\007' \"$(basename \"$PWD\")\" >/dev/tty 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\033]0;✅ %s\\007' \"$(basename \"$PWD\")\" >/dev/tty 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  },
+  "disableRemoteControl": true,
+  "disableWorkflows": true,
+  "disableArtifact": true,
+  "workflowKeywordTriggerEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/scripts/statusline-command.sh"
+  },
+  "outputStyle": "Colleague",
+  "autoMemoryEnabled": false,
+  "autoDreamEnabled": false,
+  "preferredNotifChannel": "terminal_bell",
+  "idleCompaction": false,
+  "switchModelsOnFlag": false
+}

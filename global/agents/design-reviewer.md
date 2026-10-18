@@ -44,7 +44,7 @@ Findings cover the target doc only — the reference docs above are context, not
 - **LLD plan soundness** *(lld, dd)* — Files / Tests / Test-plan together cover the Goal; the plan honors the HLD phase's scope and decisions (no scope creep, no contradiction); risks and sequencing constraints captured; no HLD open question for the phase left unaddressed; API/schema deltas concrete enough to implement from. *(dd: no HLD exists — check the plan against its own Goal and Resolved decisions instead.)*
 - **Module cohesion** — a plan that gives an existing file a second clear responsibility instead of a new module is a finding; name the split (`conventions.md`).
 - **Design-stash hygiene** — no design-stash item is tagged for a destination the target doc already covers (arch: a written `[→ §<section>]`; hld/lld: this phase's sections; dd: untagged, any section) — those should have been integrated and deleted. Unintegrated leftovers are must-fix.
-- **Doc quality** — the doc obeys `~/.claude/playbooks/design-doc.md` and `~/.claude/prose.md`.
+- **Doc quality** — the doc obeys `~/.claude/playbooks/design-doc.md` and `~/.claude/prose.md`. A decision carrying mechanism is a finding (§H3).
 
 ## Output
 
@@ -54,4 +54,4 @@ Categorized findings with section refs (e.g. `## Cross-cutting concerns — Auth
 - **suggestion**: non-blocking improvements — more justification, more detail, restructure for clarity, weak rationale.
 - **nit**: minor stylistic or typographical.
 
-Tag each finding with the review axis it came from (consistency, completeness, realism, risk, …).
+Tag each finding with the review axis it came from (consistency, completeness, realism, risk, …). A finding against a written rule also cites the rule's ID (`§C2`, `P10`).
