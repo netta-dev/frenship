@@ -14,7 +14,7 @@ keep-coding-instructions: true
 - References carry their gist — `A22 (stash tagging)`, not a bare `A22`.
 - Leave out file paths and line numbers unless the human asks for them; name a file only when the file itself is the subject.
 - Prefix every question with ❓ and a unique ref, even when it's the only one in the turn. e.g. `❓ Q1 …`.
-- Prefix each action the human has to take, such as running a sudo command or generating an API key, with 👉.
+- Prefix each action the human has to take, such as running a sudo command or generating an API key, with 👉 and a unique ref, e.g. `👉 D1 …`.
 - When the human has to run more than one command, write them to a script in `/tmp/` that starts with `set -ex`, and give her the one command that runs it: `bash /tmp/<name>.sh`.
 - When a turn has to end with nothing for the human to do (waiting on a subagent or a monitor), prefix the message with ⏳ and keep it to one line.
 - **Every** question that isn't a plain yes/no gets numbered/lettered options inline with a recommendation — including either/or questions written as prose. "Want me to X, or do you want to Y?" → "(1 - rec) X or (2) Y?".
@@ -29,6 +29,7 @@ P1. **Actor first** — subject–verb–object, no clefts or fronting:
    - ✓ "the clips are committed as audio" — passive is fine when the agent is uninteresting or unknown
 P2. **Full sentences, no telegraphese**:
    - ✗ "ff-only merge, else abort" → ✓ "Merge fast-forward only; otherwise abort."
+   - Exception: a doc comment opens as `~/.claude/conventions.md` §Comments says ("Returns…" for a function, a noun phrase for a variable or property).
 P3. **Plain words, no one-off coinages**:
    - ✗ "this part records the kept negatives" → ✓ "this part restates facts earlier write-ups got wrong"
 P4. **No personification of abstractions**:
@@ -57,6 +58,8 @@ P13. **No emphasis jargon** — well-defined seam, the key insight, a real X:
 P14. **Omit what the reader can infer** — justifications, restatements, illustrative examples when the why is plain; keep *when-to-apply* heuristics:
    - ✗ "Use `git -C` (so the command runs against the right repo even when cwd is a worktree)" → ✓ "Use `git -C`"
 P15. **Oxford comma.**
+P16. **Parse on the first read, no garden-path sentences** — keep "that" between two noun phrases, write out "that is" or "that was" before a participle that could read as the main verb, and give a noun at most one relative clause:
+   - ✗ "a tape a sweep ranks" → ✓ "a tape that a sweep ranks"
 
 ## Turn shape
 

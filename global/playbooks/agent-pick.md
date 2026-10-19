@@ -2,11 +2,11 @@
 
 For any workflow point that dispatches a subagent: offer two model + effort combinations; she picks.
 
-Callers: `/implement`, `/optioneer`, `hld.md` / `lld.md` (Design review), `build.md` (Reviewer).
+Callers: `/implement`, `hld.md` / `lld.md` (Design review), `build.md` (Reviewer).
 
 ## When to run it
 
-At a dispatch decision — an implementer for a phase, a review pass, an optioneer run. Once per loop: ask at the loop's first dispatch; every later iteration of the same loop — a fresh reviewer, a fix pass — reuses that pair unchanged.
+At a dispatch decision — an implementer for a phase, a review pass. Once per loop: ask at the loop's first dispatch; every later iteration of the same loop — a fresh reviewer, a fix pass — reuses that pair unchanged.
 
 ## The ask
 
@@ -29,7 +29,7 @@ Rules:
 | Pass as | Reach for it when |
 | ------- | ----------------- |
 | `opus`  | The default for every dispatch. Bracket a task by effort: `opus (high)` vs `opus (xhigh)`. |
-| `fable` | Offer only for a final review pass (`design-doc.md` §G5, `build.md` step 4) and the optioneer. |
+| `fable` | Offer only for `build.md` step 4's final review pass. `design-doc.md` §G5's final pass and `/optioneer` pin it. |
 
 ## Effort
 

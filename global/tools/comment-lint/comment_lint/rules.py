@@ -33,7 +33,8 @@ PROSE_RULES: dict[str, str] = {
     "'what the guard refuses is a call'.",
     "P2_telegraphese": "Fragment or telegraphese instead of a full sentence, e.g. "
     "'ff-only merge, else abort'. A tabular block, such as aligned columns under `Usage:` "
-    "or `Exit codes:`, is exempt.",
+    "or `Exit codes:`, is exempt. So is a doc comment's opener: a third-person verb ('Returns…') "
+    "for a function, a noun phrase for a variable or property.",
     "P3_coinage": "A one-off coinage or unusual word where a plain word exists.",
     "P4_personification": "Personifies an abstraction: the function 'wants', the alias "
     "'earns its place'.",
@@ -57,6 +58,9 @@ PROSE_RULES: dict[str, str] = {
     "illustrative example when the why is plain.",
     "P15_oxford_comma": "Missing Oxford comma: a list of three or more has no comma before its "
     "final 'and'/'or', e.g. 'lint, tests and types'.",
+    "P16_garden_path": "A sentence that doesn't parse on the first read: a dropped 'that' between two "
+    "noun phrases ('a tape a sweep ranks'), a participle that reads as the main verb, or two relative "
+    "clauses on one noun.",
 }
 
 

@@ -13,12 +13,13 @@
 Shortcuts I type; when I do, apply the expansion:
 - `ctr` — present the options with pros, cons, and tradeoffs + a recommendation (with refs, per Lists).
 - `cxp` — explain more simply and in plainer language; provide more context; add a worked example if it aids understanding; if there's a decision for me, ctr.
-- `crd` — redo your last message with refs where missing, per Lists.
+- `cmr` — redo your last message with refs where missing, per Lists.
 - `cws` — do a web search.
 - `qq <question>` — answer the question only; no edits or other actions.
 - `cai` — I track work in an external issue tracker; write the action item as an issue: one-line title + a short description I can paste in.
-- `crc <reply>` — I accept all your recommendations except what's in the reply (a bare `crc` accepts all).
-- `lg` — looks good; proceed.
+- `kk <reply>` — I accept all your recommendations except what's in the reply (a bare `kk` accepts all). Commit only on `lg`.
+- `lg` — looks good; commit.
+- `cdr <text>` or `<text> cdr` — I haven't read the text (e.g. a prompt from another Claude). Quote what you refer to in it, check its claims before relying on them, and confirm with me any decision it says I made.
 
 ## Docs
 

@@ -4,14 +4,15 @@ The pass over a change's comments and docstrings. `build.md` step 6 runs it afte
 
 ## Dispatch
 
-Stage the change (`git add -A`) before each pass, so the pass's edits are the unstaged diff.
+Stage the change (`git add -A`) before the first pass, so the passes' edits are the unstaged diff. Run the three passes one after another, each on the working tree the last one left; each applies its own rewrites.
 
-1. Run the prose-reviewer on Codex, Sol (high), per `~/.claude/playbooks/codex.md` The call with `-s workspace-write`, in diff mode on the diff, scoped to code comments and docstrings, excluding `docs/designs/**`. Tell it to apply each finding's rewrite, editing comments and docstrings only.
-2. Then run the comment-reviewer (Task, `subagent_type: comment-reviewer`) on the working tree, so it judges the comments with the prose pass's fixes in. It applies its own rewrites.
+1. The prose-reviewer (Task, `subagent_type: prose-reviewer`), in diff mode on the diff, scoped to code comments and docstrings, excluding `docs/designs/**`.
+2. The prose-reviewer on Codex, Sol (xhigh), per `~/.claude/playbooks/codex.md` The call with `-s workspace-write`, with the same scope. Tell it to apply each finding's rewrite, editing comments and docstrings only.
+3. The comment-reviewer (Task, `subagent_type: comment-reviewer`) on the working tree.
 
-After each pass, read `git diff` and keep every edit unless it introduces a factual error or drops a fact the original comment carried; fix those hunks, then stage. A comment either pass deleted stays deleted; similar comments elsewhere in the file are never grounds to restore it.
+After the third pass, read `git diff` and keep every edit unless it introduces a factual error or drops a fact the original comment carried; fix those hunks, then stage. A comment any pass deleted stays deleted; similar comments elsewhere in the file are never grounds to restore it.
 
-Re-run the pass after any later change to the code.
+Re-run the three passes after any later change to the code.
 
 ## Unsupported files
 

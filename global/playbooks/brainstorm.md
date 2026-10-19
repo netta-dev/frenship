@@ -8,7 +8,7 @@ Read `.claude/context/` if present: `conventions.md` (principles), `capabilities
 
 ## Discussion
 
-Present options with tradeoffs. Ask clarifying questions. Keep it conversational—the human is thinking aloud. For UI/UX, critique honestly as a senior designer: design principles, accessibility, edge cases.
+Present options with tradeoffs. Ask clarifying questions. Word each question in plain words or in terms that the human has used. Treat a brief that another session wrote as unread by her, and explain each of its terms the first time a question uses it. Keep it conversational—the human is thinking aloud. For UI/UX, critique honestly as a senior designer: design principles, accessibility, edge cases.
 
 ## Capture low-level details
 

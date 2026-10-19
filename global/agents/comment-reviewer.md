@@ -1,6 +1,6 @@
 ---
 name: comment-reviewer
-description: Comment pass on a diff. Judges every added comment and docstring against the comment and prose rules with comment-lint, proposes a rewrite per flagged comment and re-judges it. Edits comments and docstrings only; the orchestrator reviews the edits as a diff. Dispatched by comment-review.md after the prose pass.
+description: Comment pass on a diff. Judges every added comment and docstring against the comment and prose rules with comment-lint, proposes a rewrite per flagged comment and re-judges it. Edits comments and docstrings only; the orchestrator reviews the edits as a diff. Dispatched by comment-review.md after the two prose passes.
 tools: Read, Grep, Glob, Bash, Edit
 model: opus
 effort: high

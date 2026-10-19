@@ -7,6 +7,7 @@ P1. **Actor first** — subject–verb–object, no clefts or fronting:
    - ✓ "the clips are committed as audio" — passive is fine when the agent is uninteresting or unknown
 P2. **Full sentences, no telegraphese**:
    - ✗ "ff-only merge, else abort" → ✓ "Merge fast-forward only; otherwise abort."
+   - Exception: a doc comment opens as `~/.claude/conventions.md` §Comments says ("Returns…" for a function, a noun phrase for a variable or property).
 P3. **Plain words, no one-off coinages**:
    - ✗ "this part records the kept negatives" → ✓ "this part restates facts earlier write-ups got wrong"
 P4. **No personification of abstractions**:
@@ -35,3 +36,5 @@ P13. **No emphasis jargon** — well-defined seam, the key insight, a real X:
 P14. **Omit what the reader can infer** — justifications, restatements, illustrative examples when the why is plain; keep *when-to-apply* heuristics:
    - ✗ "Use `git -C` (so the command runs against the right repo even when cwd is a worktree)" → ✓ "Use `git -C`"
 P15. **Oxford comma.**
+P16. **Parse on the first read, no garden-path sentences** — keep "that" between two noun phrases, write out "that is" or "that was" before a participle that could read as the main verb, and give a noun at most one relative clause:
+   - ✗ "a tape a sweep ranks" → ✓ "a tape that a sweep ranks"
