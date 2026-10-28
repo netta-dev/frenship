@@ -6,7 +6,7 @@ description: Orchestrate the engineering pipeline — brainstorm, HLD, phases, w
 
 After every commit and every conversation compaction, re-read this `/engineer` skill before deciding next steps.
 
-Orchestrate the engineering pipeline. Single-session; walk the pipeline and let conversation hold state. Read each playbook only when entering that step — don't preload.
+Orchestrate the engineering pipeline. Single-session; walk the pipeline and let conversation hold state. Record a finding that a later phase or LLD depends on as soon as you produce it: in the HLD as an open-question answer, or in `design-stash.md` tagged `[→ phase N]`. Read each playbook only when entering that step — don't preload.
 
 ## Resume
 

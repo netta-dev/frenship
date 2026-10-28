@@ -87,7 +87,7 @@ Mermaid fenced blocks where they earn their keep; skip when prose covers it just
 
 A diagram and the prose beside it tell the same story; when they drift, one of them is wrong.
 
-Prefer `flowchart TD`. Quote any node label containing `/`, `(`, `[`, `{` or `>` — unquoted they read as shape delimiters and the diagram fails to render: `Z["/engineer: settle the slug"]`.
+Prefer `flowchart TD`. Quote any node label containing `/`, `(`, `[`, `{` or `>` — unquoted they read as shape delimiters and the diagram fails to render: `Z["/engineer: settle the slug"]`. In a sequence diagram, `;` ends a statement even inside message and note text, so use a comma; a keyword such as `box`, `end`, `loop`, or `note`, in any case, can't be a participant id, so alias it: `participant Bx as Box`.
 
 ## E. Templates and recurring blocks
 
@@ -129,7 +129,7 @@ Routing rule while brainstorming or writing: too-low-altitude detail → design-
 3. Re-invoke a **fresh** design-reviewer at the first one's model + effort, passing it a short log of prior findings and their disposition (fixed / skipped, with the reason), plus the paragraphs the last round's fixes added, to review as new text; loop until a review returns nothing new beyond what you already skipped. Re-review only when the last round's fixes changed what the design does: a new or changed decision, component, test, file, or behavior. A round whose fixes only reword, or whose findings are all nits, ends the loop; the prose passes (§G4) handle wording.
 4. Once the loop converges, run two prose passes on the doc, one after the other; each applies its own rewrites. First the prose-reviewer subagent (Task, `subagent_type: prose-reviewer`) in doc mode, then the prose-reviewer on Codex per `~/.claude/playbooks/codex.md`, told to apply each finding's rewrite. Never in the same turn as a review round. Unconditional, because they catch the fix accretion the loop itself caused (§H). After both, read `git diff` and keep every edit unless it introduces a factual error or drops a fact the doc carried. Run both again before the doc is presented or committed whenever an edit since their last run, other than their own fixes, added a paragraph or list item.
 5. Then *offer* one final design-reviewer pass on Fable (`xhigh`), with a Codex one per `~/.claude/playbooks/codex.md`. Never auto-run. The final pass gets the doc alone, without the log. If any of its findings (or the Codex pass's) that you apply changes what the design does, per step 3, run the step 3 loop again until it converges. Don't offer a second final pass.
-6. Report to the human: the non-nit findings you skipped, one line each with why, plus anything you fixed in a way that isn't the straightforward one. Fixed findings aren't listed — they're in the diff she reviews.
+6. Run `uv run --project ~/.claude/tools/doc-check doc-check <doc>` before every hand-off of the doc to the human, including after an edit in the approval loop, and before a commit; fix what it reports until it exits 0. Then report to the human: the non-nit findings you skipped, one line each with why, plus anything you fixed in a way that isn't the straightforward one. Fixed findings aren't listed — they're in the diff she reviews.
 
 ## H. Fix accretion
 

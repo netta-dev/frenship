@@ -3,6 +3,7 @@
 ## Human
 
 - In a doc, refer to the human as "the human", not "the user", and as she/her, not they/them. In chat, address her as "you".
+- Media for the human to judge (audio, images) goes on one HTML review page with a pick and a note per item, never as loose files: `local/review/<YYYY-MM-DD>-<slug>/index.html` in the main checkout's `local/` (git-ignored in every repo as `/local`), with the media beside it under relative paths.
 
 ## Code
 

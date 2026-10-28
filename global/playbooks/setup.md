@@ -35,7 +35,7 @@ Create approved files. Skip empty context files (`conventions.md`, `architecture
 After Execute (the manifest authoring routine's cwd-grep reads `capabilities.md`, which Execute just created):
 
 - Run `~/.claude/playbooks/worktree.md`'s manifest authoring routine and write `.claude/context/worktree.md` (copy-list of untracked local state, setup command, runtime notes — "None" where nothing applies).
-- Add `.claude/worktrees/` and `.eng-provisioned` to `.gitignore` (so future worktrees don't dirty main checkout; sentinel self-clears on recreate).
+- Add `.claude/worktrees/`, `.eng-provisioned`, and `/local` to `.gitignore` (so future worktrees don't dirty main checkout; sentinel self-clears on recreate).
 
 ## Commit
 

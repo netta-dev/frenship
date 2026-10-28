@@ -18,29 +18,7 @@
 CMD=$(jq -r '.tool_input.command // empty')
 [ -n "$CMD" ] || exit 0
 
-heredoc_re="(^|[^<])<<-?[[:space:]]*['\"]?([A-Za-z_][A-Za-z0-9_]*)"
-shell_like='bash|sh|zsh|dash|ksh|ssh|eval|docker|docker-compose|podman|kubectl'
-strip_data_heredocs() {
-  local line delim="" keep="" out="" word
-  local -a words
-  while IFS= read -r line; do
-    if [ -n "$delim" ]; then
-      [ -n "$keep" ] && out+="$line"$'\n'
-      [ "${line#"${line%%[!$'\t']*}"}" = "$delim" ] && delim=""
-      continue
-    fi
-    out+="$line"$'\n'
-    [[ $line =~ $heredoc_re ]] || continue
-    delim=${BASH_REMATCH[2]}
-    read -ra words <<< "$(printf '%s\n' "${line%%<<*}" | sed -E 's/.*(&&|\|\||[;|&()`])//')"
-    word=""
-    for word in "${words[@]}"; do
-      [[ $word == sudo || $word =~ ^[A-Za-z_][A-Za-z0-9_]*= ]] || break
-    done
-    [[ ${word##*/} =~ ^($shell_like)$ ]] && keep=1 || keep=""
-  done <<< "$1"
-  printf '%s' "$out"
-}
+source "$(dirname "$0")/lib/strip-data-heredocs.sh"
 CMD=$(strip_data_heredocs "$CMD")
 
 deny() {

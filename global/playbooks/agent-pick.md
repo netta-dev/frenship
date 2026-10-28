@@ -22,7 +22,7 @@ Rules:
 - **Exactly two**.
 - **Ground the reason in what you know about this task** — its size, how much is mechanical, whether the plan leaves anything open, what it touches.
 - **Check the agent's frontmatter first.** It can pin `model`, `effort`, or both. Offer only the axis it leaves open, and skip the ask entirely when it pins both.
-- **Pass `effort` as a parameter on the Agent call** — it works even though the tool schema you see doesn't list it. Frontmatter `effort:` pins it instead.
+- **Pass `effort` as a parameter on the Agent call.** Frontmatter `effort:` pins it instead.
 
 ## Models
 

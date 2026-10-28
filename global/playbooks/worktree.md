@@ -2,7 +2,7 @@
 
 Machinery for running an `/engineer` or `/dev` project in its own git worktree on `eng/<project>` at `.claude/worktrees/<project>/`, so a dirty implementation tree never touches the main checkout. Loaded on demand by the command at each lifecycle step. "Design doc" below means the HLD (`/engineer`) or the DD (`/dev`).
 
-Session isolation refuses an action: `ExitWorktree(keep)`, run it from the main checkout, `EnterWorktree(path=…)` back. Try that before escalating manual work to the human. It also refuses a Bash command whose text mentions `git` even when it only edits files (a heredoc, a Python script): use Edit, or keep `git` out of the command text.
+Session isolation refuses an action: `ExitWorktree(keep)`, run it from the main checkout, `EnterWorktree(path=…)` back. Try that before escalating manual work to the human. It also refuses a Bash command whose text mentions `git` even when it only edits files (a heredoc, a Python script): use Edit, or keep `git` out of the command text. It also refuses a `Write`, a heredoc, or a path built in a shell variable when the target sits in a symlinked directory such as `local/`: write the file under `/tmp`, then `mv` it in with literal paths.
 
 ## Create + enter
 
@@ -10,9 +10,10 @@ For a new project (Resume found none) or a milestone start. **Slug rule**: a mil
 
 ```
 # steps 1–3 on the main checkout, on main
-1. ensure `.claude/worktrees/` and `.eng-provisioned` are both in .gitignore
+1. ensure `.claude/worktrees/`, `.eng-provisioned`, and `/local` are all in .gitignore
    (commit to main if missing; idempotent once seeded)
 2. git worktree add -b eng/<project> .claude/worktrees/<project> HEAD   # base = local HEAD
+   mkdir -p local && ln -s "$PWD/local" .claude/worktrees/<project>/local   # the worktree shares main's local/
 3. EnterWorktree(path=".claude/worktrees/<project>")                    # session moves onto the branch
 4. toolchain check: if `.claude/context/capabilities.md` declares a `toolchain_check`, provision
    first (Provision, below), run the check, and offer a toolchain upgrade as the project's first
@@ -25,7 +26,7 @@ For a new project (Resume found none) or a milestone start. **Slug rule**: a mil
 - **Assumes an existing git repo.** A git-less greenfield workspace has nothing to worktree from — skip create/enter and run the project in the workspace dir (today's main-checkout behavior); the Setup playbook `git init`s it, and worktree adoption begins with the next project.
 - **Base is local `HEAD`, not origin.** Don't use `EnterWorktree`'s native create — it bases off `origin/<default>`, which can be stale or absent. Local `HEAD` is the correct base.
 - **`EnterWorktree(path)` takes no `name`**, so it enters the worktree by path without tripping the "already in a worktree" guard.
-- **Both `.gitignore` entries must land on main before creation.** Without `.claude/worktrees/`, the nested worktree dir shows untracked in the main checkout's `git status`, dirtying it — and main must stay clean so the branch can fast-forward back into it later. `.eng-provisioned` rides along for the provisioning sentinel (see Provision). Git still lets `git worktree add` write into the ignored path.
+- **All three `.gitignore` entries must land on main before creation.** Without `.claude/worktrees/`, the nested worktree dir shows untracked in the main checkout's `git status`, dirtying it — and main must stay clean so the branch can fast-forward back into it later. `.eng-provisioned` rides along for the provisioning sentinel (see Provision). Git still lets `git worktree add` write into the ignored path.
 - **The step-1 fallback commit touches shared main.** If it actually has to commit (an un-seeded repo — one not yet given these entries), and the repo is shared with another checkout, keep this commit single-owner.
 
 ## Manifest
@@ -99,7 +100,7 @@ Re-enters a project's worktree when resuming across sessions. The session starts
 
 1. **A worktree project?** Yes iff the branch exists locally or on origin: `git show-ref --verify --quiet refs/heads/eng/<project> || git ls-remote --exit-code origin eng/<project> >/dev/null 2>&1`. Neither → a main-checkout project (pre-worktree, or a git-less workspace); resume in place, don't enter.
 2. **Enter, if cleanly enterable** — the local branch exists and the dir is present (`[ -d .claude/worktrees/<project> ]`; use the filesystem, not `git worktree list`, which keeps showing a `rm -rf`'d worktree until `git worktree prune`). `EnterWorktree(path=".claude/worktrees/<project>")`, then check the tree is at a clean boundary — `git status --porcelain` empty and no in-progress merge (`git rev-parse -q --verify MERGE_HEAD` empty). Dirty or mid-merge → stop and surface (an interrupted back-merge, hotfix or implementation left it mid-flight); don't build on an unfinished tree. Clean → read the current step from the branch's design-doc `Status` line — authoritative in the worktree, since the branch is at or ahead of main. Every branch commit integrates to main as soon as it lands (LLD or DD approval, phase commit; a setup or toolchain commit rides the next integrate), so a branch ahead of main at a clean boundary is an interrupted integrate: run Integrate to catch main up, as whichever caller the stranded commit belongs to, then continue at the pipeline step matching the branch's `Status`.
-3. **Otherwise fail loud** — the dir is missing, or the branch is only on origin (no local head — e.g. another checkout). Report the state — branch local? on origin? dir present? — and the recovery: `git worktree prune`, then `git worktree add .claude/worktrees/<project> eng/<project>` (or `git worktree add -b eng/<project> .claude/worktrees/<project> origin/eng/<project>` if the local head is gone too); re-provision then runs on its own, since `.eng-provisioned` is git-ignored and absent from the fresh dir. Let the human decide — don't silently recreate or resume on main.
+3. **Otherwise fail loud** — the dir is missing, or the branch is only on origin (no local head — e.g. another checkout). Report the state — branch local? on origin? dir present? — and the recovery: `git worktree prune`, then `git worktree add .claude/worktrees/<project> eng/<project>` (or `git worktree add -b eng/<project> .claude/worktrees/<project> origin/eng/<project>` if the local head is gone too), then re-link `local` as Create + enter step 2 does; re-provision then runs on its own, since `.eng-provisioned` is git-ignored and absent from the fresh dir. Let the human decide — don't silently recreate or resume on main.
 
 ## Teardown
 
