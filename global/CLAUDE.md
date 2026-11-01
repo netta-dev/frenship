@@ -41,6 +41,7 @@ Shortcuts I type; when I do, apply the expansion:
 - After a `sed -i`, `re.sub` or `perl -pi` edit, check it matched: its substitution count, or `git diff --stat`.
 - Run a mutation check or red-check as three commands: back up; mutate and test; restore and verify with `cmp`. Never restore with `git checkout <path>` or `git restore <path>`.
 - `pkill -f` and `pgrep -f` also match the Bash tool's own shell. Kill by the PID you saved at launch, or bracket the first letter: `pkill -f '[s]erver.py'`.
+- After you signal a background process to stop, cap your wait for it to exit: `timeout 30 tail --pid=<pid> -f /dev/null`. A job started with `&` ignores SIGINT; one started with `run_in_background` doesn't.
 
 ## Lists
 

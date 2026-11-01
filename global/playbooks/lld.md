@@ -15,6 +15,7 @@ Current phase from the HLD's `Status` line. Confirm with the human if ambiguous.
 3. **Read context:** `@~/.claude/conventions.md`, workspace `.claude/context/{conventions,architecture,docs}.md` as relevant, user guides if the change affects user behavior.
 4. **Read relevant code** for change surface.
 5. **Verify external APIs** — check every vendor/library API the plan relies on against the installed package / vendor docs: exists, not deprecated, right *mode*, valid params, and *every* relied-on path. Non-derivable endpoints and per-provider telemetry are explicit fail-loud inputs or independently measured.
+   - **Vendor behavior.** When the design rests on how a vendor's API behaves and a probe can confirm that behavior, propose the probe to the human before the first review round.
 6. **Field-semantics changes** — when the plan changes an existing field's *semantics*, grep every reader of that field and mark each affected/unaffected in the plan.
 7. **UI changes**: screenshot current state via declared visual-testing MCP.
 
@@ -24,7 +25,9 @@ Write at `docs/designs/<project-name>/lld-<N>-<slug>.md` — `<N>` and `<slug>` 
 
 - A keep-as-reference / might-need-it skip must name a live consumer or documented future use; re-check after any same-change decision that could have removed the last consumer.
 - External-infra phases: fix the orchestrator-vs-human split up front — Claude drives everything reachable from shell + creds (provisioning, resource CRUD, headless validation); the human does only hardware (mic/voice) or browser (dashboard/account) steps.
+- Name where each new module runs (the deployed service, a dev machine, CI). Keep dev-only and operator code out of runtime packages and the deploy image.
 - As you write the plan, apply its HLD amendments and delete the design-stash items it integrates, rather than listing either in Files.
+- When the change adds or edits a shell script that branches or parses input, plan a test for it.
 
 ## Alternatives, then design review
 
@@ -101,6 +104,8 @@ class FooScope extends StatefulWidget {
 - `path/old.ext` — why dropped; what absorbed it.
 
 ## Tests
+
+*Give each test file one line naming the behaviors it pins. Leave out test names.*
 
 - **New**: `path/foo_test.dart` — what it covers.
 - **Modified**: `path/bar_test.dart` — why.

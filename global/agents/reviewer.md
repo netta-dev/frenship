@@ -32,6 +32,7 @@ On a large diff, fan out per-area read passes to your own subagents, then judge 
 - **Test coverage** for the change. A regression test pins exact expected values; an inequality that the regression also passes is a must-fix. For each behavior the design changes, name the test that fails if it's reverted; a behavior with none is a must-fix.
 - **Dead code** — anything kept "for reference" must name a live consumer or documented future use
 - **Module cohesion** — a touched file that has grown a second clear responsibility is a finding; name the split (`conventions.md`).
+- **Module placement** — check what each new module imports, which code imports it, and where it runs. A module that pulls in a heavy runtime to read a few constants is a finding. Dev-only or operator code in a runtime package or the deploy image is also a finding.
 - **Non-obvious approach** — a workaround, hack, or unusual construction that the plan doesn't call for and no comment explains
 - **In-file structure** — an edited element keeps the form of its siblings in the same file. Flag only when you can name what the uniformity is for. Comments and prose always follow `conventions.md` / `prose.md`. A comment citing a design doc, decision number or review round is a must-fix.
 - **Doc accuracy** — each claim that an added or changed runbook, playbook, `CLAUDE.md`, or `.claude/context/*` line makes about the code holds against the code.
@@ -57,4 +58,4 @@ Actionable findings only — no checked-and-cleared / positive-confirmation note
 
 Tag each finding with a type: `correctness`, `test-coverage`, `scope`, `convention`, `simplification`.
 
-A pattern finding (a duplicate, a stale reference, a wrong literal) lists every instance in scope, searched under each spelling.
+A pattern finding (a duplicate, a stale reference, a wrong literal) lists every instance in scope, searched under each spelling. A finding that rests on how a library, framework, or vendor API behaves cites the line or doc that shows it (`<package>/<file>:<line>` or a URL); without one, phrase it as a question to verify.

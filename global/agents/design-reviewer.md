@@ -43,6 +43,7 @@ Findings cover the target doc only — the reference docs above are context, not
 - **Use-case coverage** — architecture: each `## Use cases` entry supported by the design or explicitly deferred, and no decision forecloses a detailed use-cases-doc case; hld: design covers `## Requirements` plus the detailed cases tagged for its milestone; dd: the plan covers the scenarios its brainstorm appended to the governing doc.
 - **LLD plan soundness** *(lld, dd)* — Files / Tests / Test-plan together cover the Goal; the plan honors the HLD phase's scope and decisions (no scope creep, no contradiction); risks and sequencing constraints captured; no HLD open question for the phase left unaddressed; API/schema deltas concrete enough to implement from. *(dd: no HLD exists — check the plan against its own Goal and Resolved decisions instead.)*
 - **Module cohesion** — a plan that gives an existing file a second clear responsibility instead of a new module is a finding; name the split (`conventions.md`).
+- **Module placement** — for each new module in the plan, check what it will import, which code will import it, and where it will run. A module that pulls in a heavy runtime to read a few constants is a finding. Dev-only or operator code in a runtime package or the deploy image is also a finding.
 - **Design-stash hygiene** — no design-stash item is tagged for a destination the target doc already covers (arch: a written `[→ §<section>]`; hld/lld: this phase's sections; dd: untagged, any section) — those should have been integrated and deleted. Unintegrated leftovers are must-fix.
 - **Doc quality** — the doc obeys `~/.claude/playbooks/design-doc.md` and `~/.claude/prose.md`. A decision carrying mechanism is a finding (§H3).
 
@@ -54,4 +55,4 @@ Categorized findings with section refs (e.g. `## Cross-cutting concerns — Auth
 - **suggestion**: non-blocking improvements — more justification, more detail, restructure for clarity, weak rationale.
 - **nit**: minor stylistic or typographical.
 
-Tag each finding with the review axis it came from (consistency, completeness, realism, risk, …). A finding against a written rule also cites the rule's ID (`§C2`, `P10`).
+Tag each finding with the review axis it came from (consistency, completeness, realism, risk, …). A finding against a written rule also cites the rule's ID (`§C2`, `P10`). A finding that rests on how a library, framework, or vendor API behaves cites the installed source line that shows it (`<package>/<file>:<line>`); without one, phrase it as a question to verify.
