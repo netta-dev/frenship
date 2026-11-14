@@ -6,7 +6,7 @@ description: Worktree-backed fix or small feature — brainstorm, one plan, buil
 
 After every commit and every conversation compaction, re-read this `/dev` skill before deciding next steps.
 
-A fix or small feature too small for an HLD: one worktree, one brainstorm, one plan (inline or a single design doc), one build, one wrap-up. Read each playbook only when entering that step — don't preload.
+A fix or small feature too small for an HLD: one worktree, one brainstorm, one plan (inline or a single design doc), one build, one wrap-up. Read each playbook in full, and only when entering its step.
 
 Out of scope: a change whose plan splits into phases or needs an architecture-level decision.
 

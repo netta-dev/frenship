@@ -11,7 +11,7 @@ Execute an approved implementation plan. Decide dispatch; run.
 Compare work cost to subagent handoff tax (~20k tokens).
 
 - **Main thread** (no subagent): diff is clearly smaller than the handoff tax. Proxy: ~≤3 files, simple edits, no deep per-file reasoning.
-- **Subagent**: everything else. Choose model + effort per `~/.claude/playbooks/agent-pick.md` — two candidates, she picks.
+- **Subagent**: everything else. Choose model + effort per `~/.claude/playbooks/agent-pick.md`.
 
 ## Execute
 

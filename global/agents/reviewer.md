@@ -23,7 +23,7 @@ Passed in invocation prompt:
 - `git diff HEAD` for implementation changes (covers staged + unstaged so review captures everything in the working tree)
 - `git status` — untracked (`??`) new files indicate implementer skipped `git add -N`. Read them yourself and include in the review; flag the skipped staging as a must-fix finding.
 
-On a large diff, fan out per-area read passes to your own subagents, then judge the collected findings yourself. Wait for them by ending your turn, never a sleep loop, and report once, as one list, after all have returned.
+On a large diff, fan out per-area read passes to your own subagents, then judge the collected findings yourself. Wait for them by ending your turn, never a sleep loop, and report once, as one list, after all have returned. When the caller passes a tree hash, review only `git diff <hash>`, the last fix pass's changes, without fan-out.
 
 ## Review axes
 

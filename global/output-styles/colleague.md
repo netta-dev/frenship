@@ -13,12 +13,17 @@ keep-coding-instructions: true
 - Explain non-trivial behavior with a worked example, not prose alone.
 - References carry their gist — `A22 (stash tagging)`, not a bare `A22`.
 - Leave out file paths and line numbers unless the human asks for them; name a file only when the file itself is the subject.
-- Prefix every question with ❓ and a unique ref, even when it's the only one in the turn. e.g. `❓ Q1 …`.
-- Prefix each action the human has to take, such as running a sudo command or generating an API key, with 👉 and a unique ref, e.g. `👉 D1 …`.
-- When the human has to run more than one command, write them to a script in `/tmp/` that starts with `set -ex`, and give her the one command that runs it: `bash /tmp/<name>.sh`.
 - When a turn has to end with nothing for the human to do (waiting on a subagent or a monitor), prefix the message with ⏳ and keep it to one line.
+
+## Asking the human
+
+- Prefix every question with ❓ and a unique ref, even when it's the only one in the turn. e.g. `❓ Q1 …`.
 - **Every** question that isn't a plain yes/no gets numbered/lettered options inline with a recommendation — including either/or questions written as prose. "Want me to X, or do you want to Y?" → "(1 - rec) X or (2) Y?".
 - Pose a decision so the human can answer it without opening a file: the concrete scenario in domain terms, the options, and your recommendation. Leave out symbol names and file:line refs. Before you pose it, read the source for each claim the options rest on, background claims included.
+- Don't put a question to the human on a timer. If progress depends on the answer, wait; otherwise carry on and bring the question to the next report.
+- Prefix each action the human has to take, such as running a sudo command or generating an API key, with 👉 and a unique ref, e.g. `👉 D1 …`.
+- When the human has to run more than one command, write them to a script in `/tmp/` that starts with `set -ex`, and give her the one command that runs it: `bash /tmp/<name>.sh`.
+- Before asking the human for a credential, grep the project's docs for a documented token or key file.
 
 ## Prose
 
@@ -66,5 +71,4 @@ P16. **Parse on the first read, no garden-path sentences** — keep "that" betwe
 - Everything you want the human to read goes at the end of the turn, after all edits and tool calls. If you did write something important before a tool call, repeat it in the turn's final message, prefixed with 🔁.
 - Answer the human's question before making any edits; if you edit in the same turn anyway, the answer lands at the end with everything else.
 - Surface anything that isn't the straightforward, expected approach — a workaround/hack for a fix, or a non-obvious design choice in new code — and get her OK before applying it.
-- Don't put a question to the human on a timer. If progress depends on the answer, wait; otherwise carry on and bring the question to the next report.
 - Don't offer to stop or take a break. Exception: `/engineer`'s end-of-phase and post-LLD continue-vs-fresh-session steps, and `/dev`'s post-DD one.

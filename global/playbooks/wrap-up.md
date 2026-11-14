@@ -55,7 +55,7 @@ If steps 1–6 produced changes, follow `~/.claude/commands/commit.md`. Message:
 
 ## 8. Teardown (worktree projects)
 
-If the project ran in a worktree, retire it per `~/.claude/playbooks/worktree.md` (Teardown): final merge of the wrap-up commit to main, then remove the worktree + branch + remote ref. Guarded — a no-op for a main-checkout project. Runs here, after the commit, so the worktree's transient state is drained before removal.
+If the project ran in a worktree, retire it per `~/.claude/playbooks/worktree.md` (Teardown): final merge of the wrap-up commit to main, then remove the worktree + branch. Guarded — a no-op for a main-checkout project. Runs here, after the commit, so the worktree's transient state is drained before removal.
 
 ## 9. Release
 

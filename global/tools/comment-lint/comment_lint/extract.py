@@ -4,7 +4,9 @@ Python: `#` blocks via `tokenize`, docstrings via `ast`. Dart and proto: `//` bl
 `///` doc blocks, and `/* */` blocks via a small scanner that skips string literals.
 Hash-comment files are found by name (`Dockerfile`), by suffix, or by a shell shebang when the
 file has no suffix, and a suffix-less file with a Python shebang is a Python file; the shebang line
-itself is not a comment. Consecutive lines of one kind merge
+itself is not a comment. A Python or Dart comment that opens with linter directives
+(`# noqa: SIM115`, `# type: ignore[arg-type]`, `// ignore: avoid_print`) keeps only the text
+after them, and one that is only directives is dropped. Consecutive lines of one kind merge
 into a block. In diff mode only blocks that overlap
 an added line survive, so the review sees what the change wrote.
 """
@@ -25,7 +27,7 @@ AFTER = 12
 
 SUPPORTED = {
     ".py": "python",
-    ".dart": "c-style", ".proto": "c-style",
+    ".dart": "c-style", ".proto": "c-style", ".js": "c-style", ".mjs": "c-style", ".cjs": "c-style",
     ".toml": "hash", ".yaml": "hash", ".yml": "hash", ".ini": "hash", ".cfg": "hash",
     ".conf": "hash", ".sh": "hash", ".bash": "hash", ".zsh": "hash",
 }
@@ -39,6 +41,17 @@ NAMED = {
 # Python (`env python3`, `env -S uv run python`) as a Python file.
 _SHEBANG = re.compile(r"^#!\s*\S*(?:/|\s)(?:ba|z|da|k)?sh\b|^#!\s*\S*/env\s+(?:ba|z|da|k)?sh\b")
 _PY_SHEBANG = re.compile(r"^#!.*\bpython[0-9.]*\b")
+
+_DIRECTIVES = {
+    "#": re.compile(
+        r"noqa\b(?::\s*[A-Z]+\d+(?:[\s,]+[A-Z]+\d+)*)?|(?:type|pyright):\s*ignore\b(?:\[[^\]]*\])?"
+        r"|pragma:\s*no\s*cover\b|fmt:\s*(?:skip|off|on)\b"
+    ),
+    "//": re.compile(
+        r"ignore(?:_for_file)?:\s*[\w=]+(?:\s*,\s*[\w=]+)*|coverage:ignore-(?:file|line|start|end)\b"
+        r"|dart\s+format\s+(?:off|on)\b"
+    ),
+}
 
 # Changed files that carry no code comments, skipped without a word. Any other unsupported
 # file is reported, so a language nobody thought of shows up instead of vanishing.
@@ -138,10 +151,14 @@ def _hash_blocks(source: str) -> list[Block]:
 
     for tok in tokenize.generate_tokens(io.StringIO(source).readline):
         if tok.type == tokenize.COMMENT:
+            text = _without_directives(tok.string, "#")
+            if text is None:
+                flush()
+                continue
             row = tok.start[0]
             if cur and row != cur[-1][0] + 1:
                 flush()
-            cur.append((row, tok.string))
+            cur.append((row, text))
         elif tok.type not in (tokenize.NL, tokenize.NEWLINE, tokenize.INDENT, tokenize.DEDENT):
             flush()
     flush()
@@ -227,6 +244,11 @@ def _c_style_blocks(lines: list[str]) -> list[Block]:
                 in_block, block_start, block_lines = True, row, [text]
             continue
         kind = "docstring" if text.startswith("///") else "comment"
+        if kind == "comment":
+            text = _without_directives(text, "//")
+            if text is None:
+                flush()
+                continue
         trailing = line[:col].strip() != ""
         if trailing or kind != cur_kind or (cur and row != cur[-1][0] + 1):
             flush()
@@ -236,6 +258,16 @@ def _c_style_blocks(lines: list[str]) -> list[Block]:
             flush()
     flush()
     return blocks
+
+
+def _without_directives(text: str, marker: str) -> str | None:
+    """Returns the comment `text` minus its leading directives, or None when they are all of it."""
+    rest = text.removeprefix(marker).lstrip()
+    if not _DIRECTIVES[marker].match(rest):
+        return text
+    while m := _DIRECTIVES[marker].match(rest):
+        rest = rest[m.end():].lstrip(" \t#/—–-")
+    return f"{marker} {rest}" if rest else None
 
 
 def _line_comment(line: str, markers: tuple[str, ...]) -> tuple[int, str] | None:

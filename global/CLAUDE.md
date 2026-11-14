@@ -45,4 +45,4 @@ Shortcuts I type; when I do, apply the expansion:
 
 ## Lists
 
-**Addressable lists**: Anything the human might reply to (questions, options, findings, scratch items) gets a ref she can use **unambiguously**: `3`, `B11`, `A22a`. Don't use the letter O in a ref.
+**Addressable lists**: Anything the human might reply to (questions, options, findings, scratch items) gets a ref she can use **unambiguously**: `3`, `B11`, `A22a`. When a message holds more than one numbered list, give each its own letter prefix (`A1`, `A2`, then `B1`, `B2`). Nested items get sub-refs (`A2a`, `A2b`) instead of bare bullets. Don't use the letters O or H in a ref.

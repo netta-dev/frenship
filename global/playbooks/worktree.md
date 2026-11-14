@@ -27,7 +27,6 @@ For a new project (Resume found none) or a milestone start. **Slug rule**: a mil
 - **Base is local `HEAD`, not origin.** Don't use `EnterWorktree`'s native create — it bases off `origin/<default>`, which can be stale or absent. Local `HEAD` is the correct base.
 - **`EnterWorktree(path)` takes no `name`**, so it enters the worktree by path without tripping the "already in a worktree" guard.
 - **All three `.gitignore` entries must land on main before creation.** Without `.claude/worktrees/`, the nested worktree dir shows untracked in the main checkout's `git status`, dirtying it — and main must stay clean so the branch can fast-forward back into it later. `.eng-provisioned` rides along for the provisioning sentinel (see Provision). Git still lets `git worktree add` write into the ignored path.
-- **The step-1 fallback commit touches shared main.** If it actually has to commit (an un-seeded repo — one not yet given these entries), and the repo is shared with another checkout, keep this commit single-owner.
 
 ## Manifest
 
@@ -98,9 +97,9 @@ Session isolation refuses `git -C "$MAIN"` from the worktree. Run steps 1, 2, an
 
 Re-enters a project's worktree when resuming across sessions. The session starts in the main checkout on main; the resume grep has found the design doc and the human confirmed. Derive `<project>` from the doc path — `branch = eng/<project>`, `path = .claude/worktrees/<project>`.
 
-1. **A worktree project?** Yes iff the branch exists locally or on origin: `git show-ref --verify --quiet refs/heads/eng/<project> || git ls-remote --exit-code origin eng/<project> >/dev/null 2>&1`. Neither → a main-checkout project (pre-worktree, or a git-less workspace); resume in place, don't enter.
+1. **A worktree project?** Yes iff the branch exists locally: `git show-ref --verify --quiet refs/heads/eng/<project>`. No → a main-checkout project (pre-worktree, or a git-less workspace); resume in place, don't enter.
 2. **Enter, if cleanly enterable** — the local branch exists and the dir is present (`[ -d .claude/worktrees/<project> ]`; use the filesystem, not `git worktree list`, which keeps showing a `rm -rf`'d worktree until `git worktree prune`). `EnterWorktree(path=".claude/worktrees/<project>")`, then check the tree is at a clean boundary — `git status --porcelain` empty and no in-progress merge (`git rev-parse -q --verify MERGE_HEAD` empty). Dirty or mid-merge → stop and surface (an interrupted back-merge, hotfix or implementation left it mid-flight); don't build on an unfinished tree. Clean → read the current step from the branch's design-doc `Status` line — authoritative in the worktree, since the branch is at or ahead of main. Every branch commit integrates to main as soon as it lands (LLD or DD approval, phase commit; a setup or toolchain commit rides the next integrate), so a branch ahead of main at a clean boundary is an interrupted integrate: run Integrate to catch main up, as whichever caller the stranded commit belongs to, then continue at the pipeline step matching the branch's `Status`.
-3. **Otherwise fail loud** — the dir is missing, or the branch is only on origin (no local head — e.g. another checkout). Report the state — branch local? on origin? dir present? — and the recovery: `git worktree prune`, then `git worktree add .claude/worktrees/<project> eng/<project>` (or `git worktree add -b eng/<project> .claude/worktrees/<project> origin/eng/<project>` if the local head is gone too), then re-link `local` as Create + enter step 2 does; re-provision then runs on its own, since `.eng-provisioned` is git-ignored and absent from the fresh dir. Let the human decide — don't silently recreate or resume on main.
+3. **Otherwise fail loud** — the dir is missing. Report it and the recovery: `git worktree prune`, then `git worktree add .claude/worktrees/<project> eng/<project>`, then re-link `local` as Create + enter step 2 does; re-provision then runs on its own, since `.eng-provisioned` is git-ignored and absent from the fresh dir. Let the human decide — don't silently recreate or resume on main.
 
 ## Teardown
 
@@ -113,7 +112,6 @@ Retires a completed project's worktree, at wrap-up, after the final commit. Guar
 ```
 git worktree remove .claude/worktrees/<project>    # no --force: committed tree; ignored files don't block. Refusal = a stray untracked non-ignored file (unconsumed state) → stop + check, don't --force
 git branch -d eng/<project>                         # safe: the final merge left it an ancestor of main. Refusal = integrate didn't fully land (unmerged) → stop + surface; never -D (strands unmerged work)
-git ls-remote --exit-code origin eng/<project> >/dev/null 2>&1 && git push origin --delete eng/<project>   # branch is on main; drop the remote ref (else cruft + name-reuse trap). Surface a failure — a lingering ref is that trap
 ```
 
 ## Discard
@@ -124,7 +122,4 @@ The human drops the project. With her OK, drop the uncommitted work (`git checko
 1. ExitWorktree(keep)                                  # return scope to the main checkout
 2. git worktree remove --force .claude/worktrees/<project>
 3. git branch -D eng/<project>                         # -D: the abandoned branch is unmerged
-4. git ls-remote --exit-code origin eng/<project> >/dev/null 2>&1 && git push origin --delete eng/<project>
 ```
-
-Step 4's `ls-remote` gate handles the timing: the orchestrator can't see whether a background push already ran during the brainstorm, so it *checks* origin for the ref rather than guessing. Present → delete it (else a later project reusing the name hits a stale remote ref); absent → the `&&` short-circuits to a no-op.
