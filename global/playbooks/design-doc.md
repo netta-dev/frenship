@@ -75,7 +75,7 @@ Every doc obeys `~/.claude/prose.md` (cite `P<n>`). Doc-specific rules, each wit
 6. **References carry their gist.** Attach a two-to-five-word gloss to any reference the reader would otherwise have to dereference: requirement numbers, decision numbers, doc-section pointers, issue IDs. A pointer's wording must also exist at its target: "the two force-drop sites (Background)" fails if Background never uses that term — align the target's terminology, or carry the gist in a footnote instead of the bare pointer.
    - ✗ "as decision 4 requires"
    - ✓ "as decision 4 (startup reconcile owns belief) requires"
-7. **No attribution.** Don't attribute a decision to anyone.
+7. **No attribution.** Don't attribute a decision to anyone or stamp it with a date.
 
 ## D. Diagrams
 

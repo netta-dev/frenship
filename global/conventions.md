@@ -9,7 +9,7 @@ Write as a senior SWE: idiomatic, well-factored, tested.
 - Never promote your own private to public just to test it — test through the public caller. When the code delegates into a framework default, stub the *external* collaborator and assert the public behavior.
 - Early return when nested code is 3× longer than guard logic.
 - Public methods (static methods, public getters/setters) at top of class; private at bottom.
-- Don't duplicate logic — copies drift; bug fixes miss the copy. Extract at 2–3 sites — at 2 when the duplication carries a non-trivial shared invariant, drift risk is high, or a 3rd site is imminent. This overrides the built-in *three similar lines is better than a premature abstraction*, which sets the bar too high for a shared invariant.
+- Don't duplicate logic — copies drift; bug fixes miss the copy. Extract at 2–3 sites — at 2 when the duplication carries a non-trivial shared invariant, drift risk is high, or a 3rd site is imminent. This overrides the built-in *three similar lines is better than a premature abstraction*, which sets the bar too high for a shared invariant. Test cases are exempt.
 
 ## Comments
 
@@ -26,6 +26,7 @@ A comment must save a competent engineer, working here under time pressure, from
 - Comments obey `~/.claude/prose.md`.
 - No tombstone comments — a comment describes present code, not what was removed or how it used to work. Same for dead deps: delete them; removal narration belongs in the design doc.
 - In over-commented code, bring the area you're working in to this bar. Delete unnecessary comments.
+- When you find a stale comment or doc, fix it in the current change or write it up as an issue for the human (`cai`).
 - A file's existing comments aren't a precedent, whether in density, docstring style, or anything else. Match these rules, not the file.
 
 Workspaces may add their own at `.claude/context/conventions.md`; those layer on top and override where conflicting.

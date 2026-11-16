@@ -23,7 +23,6 @@ For a new project (Resume found none) or a milestone start. **Slug rule**: a mil
 ```
 
 - **Step 4's suite run** verifies the upgrade commit at creation. It can then ride a doc/tooling-only integrate (caller 2 of Integrate) without a second verification; otherwise it rides the change commit's integrate, which re-verifies. A workspace that Setup hasn't scaffolded yet doesn't declare a check; both commands re-check after Setup.
-- **Assumes an existing git repo.** A git-less greenfield workspace has nothing to worktree from — skip create/enter and run the project in the workspace dir (today's main-checkout behavior); the Setup playbook `git init`s it, and worktree adoption begins with the next project.
 - **Base is local `HEAD`, not origin.** Don't use `EnterWorktree`'s native create — it bases off `origin/<default>`, which can be stale or absent. Local `HEAD` is the correct base.
 - **`EnterWorktree(path)` takes no `name`**, so it enters the worktree by path without tripping the "already in a worktree" guard.
 - **All three `.gitignore` entries must land on main before creation.** Without `.claude/worktrees/`, the nested worktree dir shows untracked in the main checkout's `git status`, dirtying it — and main must stay clean so the branch can fast-forward back into it later. `.eng-provisioned` rides along for the provisioning sentinel (see Provision). Git still lets `git worktree add` write into the ignored path.

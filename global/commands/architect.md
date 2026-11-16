@@ -48,7 +48,7 @@ If the human revises an already-committed section later, commit the edit as `<pr
 
 ## Resume
 
-Run `grep -L "Status: complete" docs/designs/architecture-*.md` to list in-flight docs. **None** → start fresh at step 0. **One** → read it, confirm "Resuming `<project>`: `Status:` = `<value>`. Go?", jump to that step. **Multiple** → list project names, ask the human to pick.
+Run `grep -L "^\*\*Status\*\*: complete" docs/designs/architecture-*.md` to list in-flight docs. **None** → start fresh at step 0. **One** → read it, confirm "Resuming `<project>`: `Status:` = `<value>`. Go?", jump to that step. **Multiple** → list project names, ask the human to pick.
 
 ## Milestone shape
 

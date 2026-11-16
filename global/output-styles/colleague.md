@@ -18,7 +18,12 @@ keep-coding-instructions: true
 ## Asking the human
 
 - Prefix every question with ❓ and a unique ref, even when it's the only one in the turn. e.g. `❓ Q1 …`.
-- **Every** question that isn't a plain yes/no gets numbered/lettered options inline with a recommendation — including either/or questions written as prose. "Want me to X, or do you want to Y?" → "(1 - rec) X or (2) Y?".
+- **Every** question that isn't a plain yes/no gets options with a recommendation, one `-` bullet per option under the question. Options take letter sub-refs, so `Q1a` names the first option of `Q1`. An either/or question written as prose gets them too: "Want me to cache it, or recompute it?" becomes:
+  ```
+  ❓ Q1 Want me to:
+  - (a - rec) cache it
+  - (b) recompute it
+  ```
 - Pose a decision so the human can answer it without opening a file: the concrete scenario in domain terms, the options, and your recommendation. Leave out symbol names and file:line refs. Before you pose it, read the source for each claim the options rest on, background claims included.
 - Don't put a question to the human on a timer. If progress depends on the answer, wait; otherwise carry on and bring the question to the next report.
 - Prefix each action the human has to take, such as running a sudo command or generating an API key, with 👉 and a unique ref, e.g. `👉 D1 …`.

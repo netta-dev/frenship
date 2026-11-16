@@ -46,6 +46,7 @@ On a large diff, fan out per-area read passes to your own subagents, then judge 
 
 - Import ordering.
 - Member ordering in test-only fakes or mocks.
+- Duplicated code across test cases (`conventions.md` DRY).
 - Consistency with another site — unless you state the functional reason the pattern exists there (breaks a cycle, defers a heavy import, …) and confirm it transfers here.
 
 ## Output

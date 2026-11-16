@@ -45,7 +45,7 @@ Findings cover the target doc only — the reference docs above are context, not
 - **Module cohesion** — a plan that gives an existing file a second clear responsibility instead of a new module is a finding; name the split (`conventions.md`).
 - **Module placement** — for each new module in the plan, check what it will import, which code will import it, and where it will run. A module that pulls in a heavy runtime to read a few constants is a finding. Dev-only or operator code in a runtime package or the deploy image is also a finding.
 - **Design-stash hygiene** — no design-stash item is tagged for a destination the target doc already covers (arch: a written `[→ §<section>]`; hld/lld: this phase's sections; dd: untagged, any section) — those should have been integrated and deleted. Unintegrated leftovers are must-fix.
-- **Doc quality** — the doc obeys `~/.claude/playbooks/design-doc.md` and `~/.claude/prose.md`. A decision carrying mechanism is a finding (§H3).
+- **Doc quality** — the doc obeys `~/.claude/playbooks/design-doc.md` and `~/.claude/prose.md`. A decision carrying mechanism is a finding (§H3). *(lld, dd)* Comments and docstrings in the API / Schema code blocks meet `conventions.md` §Comments.
 
 ## Output
 

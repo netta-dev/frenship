@@ -21,7 +21,7 @@ Only a committed DD is a breakpoint; an inline-plan project is single-session by
 
 ## New project
 
-Settle the slug, create + enter the worktree and run the toolchain check, all per `~/.claude/playbooks/worktree.md` (Create + enter). The pipeline runs inside `.claude/worktrees/<project>/` on `eng/<project>`; a git-less workspace runs in place.
+Settle the slug, create + enter the worktree and run the toolchain check, all per `~/.claude/playbooks/worktree.md` (Create + enter). The pipeline runs inside `.claude/worktrees/<project>/` on `eng/<project>`.
 
 ## Pipeline
 
@@ -31,7 +31,7 @@ A. **Plan**
       1. **Inline plan.** Present the plan as a numbered list of steps — files to touch, tests, the shape of the change — with its decisions called out. Fold in the design-stash items and any `docs/designs/future-<workspace>.md` item now in scope.
       2. **Doc or go.** Recommend one, with a one-line reason. Doc when the change spans subsystems, changes behavior someone else must review later, or the plan should outlive this chat. The human answers `go` or `dd`.
       3. **On `go`** — present the plan for approval; a clear yes → B.
-      4. **On `dd`** — expand the plan into `docs/designs/<project>/dd-<project>.md` per `~/.claude/playbooks/lld.md` (the Write-the-plan rules and the Template's DD variant), `**Status**: DD (in progress)`. Then `lld.md`'s Alternatives-then-design-review section with doc type `dd`, and its Present-for-approval section. On approval: `**Status**: DD committed`; commit `docs/designs` alone — `git add docs/designs && git commit docs/designs -m "design doc for <desc>"`, the whole dir so the companions land and the tree is clean for the breakpoint — and integrate to main per `~/.claude/playbooks/worktree.md` (Integrate — doc-only). Then recommend continue vs. `/exit` + `/dev` resume, judged by context budget — the injected `Token usage: X/Y; Z remaining` signal if present, else files read and conversation length.
+      4. **On `dd`** — expand the plan into `docs/designs/<project>/dd-<project>.md` per `~/.claude/playbooks/lld.md` (the Write-the-plan rules and the Template's DD variant), `**Status**: DD (in progress)`. Then `lld.md`'s Alternatives-then-design-review section with doc type `dd`, and its Present-for-approval section. On approval: `**Status**: DD committed`; commit `docs/designs` alone — `git add docs/designs && git commit docs/designs -m "<project>: dd — <title>"`, the whole dir so the companions land and the tree is clean for the breakpoint — and integrate to main per `~/.claude/playbooks/worktree.md` (Integrate — doc-only). Then recommend continue vs. `/exit` + `/dev` resume, judged by context budget — the injected `Token usage: X/Y; Z remaining` signal if present, else files read and conversation length.
    3. **Setup** (one-off, if workspace lacks `.claude/context/`) — `~/.claude/playbooks/setup.md`; then re-run the toolchain check (`worktree.md` Create + enter, step 4), since Setup declares it.
 B. **Build** — `~/.claude/playbooks/build.md` with the design (inline plan or DD) and status `Complete`. It ends with the change committed and integrated.
 C. **Wrap-up** — `~/.claude/playbooks/wrap-up.md`. Its steps say which apply to a `/dev` project.

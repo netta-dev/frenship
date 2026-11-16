@@ -10,9 +10,12 @@ At a dispatch decision — an implementer for a phase, a review pass. Once per l
 
 ## The ask
 
-Two candidates, numbered, with a recommendation and the reason for it:
+Two candidates, with a recommendation and the reason for it:
 
-> ❓ (1 - rec) `<model>` (`<effort>`) or (2) `<model>` (`<effort>`) to implement this?
+> ❓ Q1 Which model and effort should implement this?
+> - (a - rec) `<model>` (`<effort>`)
+> - (b) `<model>` (`<effort>`)
+>
 > `<reason for the recommendation>`
 
 The pair can vary along either axis, or both — `opus (high)` vs `opus (xhigh)` (same model, more thinking), or, where Fable is offered, `fable (medium)` vs `opus (xhigh)` (top tier vs. the workhorse). Pick the two that actually bracket this task; don't reach for a habitual pair.

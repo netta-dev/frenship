@@ -51,7 +51,7 @@ If a design doc exists (HLD or DD), edit its `Status` line to `Project complete`
 
 ## 7. Commit
 
-If steps 1–6 produced changes, follow `~/.claude/commands/commit.md`. Message: `<project>: wrap-up — project complete`; a `/dev` project keeps a plain subject, e.g. `wrap up <what shipped>`.
+If steps 1–6 produced changes, follow `~/.claude/commands/commit.md`. Message: `<project>: wrap-up — project complete`.
 
 ## 8. Teardown (worktree projects)
 

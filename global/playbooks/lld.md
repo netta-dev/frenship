@@ -35,7 +35,7 @@ Run `~/.claude/commands/optioneer.md` — alternatives land under their **Resolv
 
 ## Present for approval
 
-Ask: **"❓ Ready to commit?"** Iterate via Edit on human pushback until clear approval. Answering a scoped sub-question resolves that item only — re-ask and wait for a clear yes.
+Ask: **"❓ Q1 Ready to commit?"** Iterate via Edit on human pushback until clear approval. Answering a scoped sub-question resolves that item only — re-ask and wait for a clear yes.
 
 ## On approval
 
@@ -80,7 +80,7 @@ Ask: **"❓ Ready to commit?"** Iterate via Edit on human pushback until clear a
 
 ## API / Schema
 
-*Interface signatures, proto/DB schema deltas, type/contract changes. Omit the section entirely if no API surface changes.*
+*Interface signatures, proto/DB schema deltas, type/contract changes. Omit the section entirely if no API surface changes. Code blocks here show only what changes. Their comments and docstrings ship as written, so they meet `conventions.md` §Comments. Change narration, decision notes, and edge cases go in the prose beside the block or in Design.*
 
 ```dart
 class FooScope extends StatefulWidget {
