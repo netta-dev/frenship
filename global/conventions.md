@@ -10,6 +10,8 @@ Write as a senior SWE: idiomatic, well-factored, tested.
 - Early return when nested code is 3× longer than guard logic.
 - Public methods (static methods, public getters/setters) at top of class; private at bottom.
 - Don't duplicate logic — copies drift; bug fixes miss the copy. Extract at 2–3 sites — at 2 when the duplication carries a non-trivial shared invariant, drift risk is high, or a 3rd site is imminent. This overrides the built-in *three similar lines is better than a premature abstraction*, which sets the bar too high for a shared invariant. Test cases are exempt.
+- Derive values from a library's public API. Reaching into its private members needs the human's OK. A subagent that can't ask reports it under its non-obvious choices and names the public route it ruled out.
+- Once a correct mechanism replaces a known-broken one, delete the broken one instead of keeping it as a fallback.
 
 ## Comments
 

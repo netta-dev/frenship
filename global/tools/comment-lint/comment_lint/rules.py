@@ -48,7 +48,8 @@ PROSE_RULES: dict[str, str] = {
     "P9_negation_emphasis": "Rejects an alternative nobody assumed, e.g. 'configuration, "
     "not re-architecture'.",
     "P10_rebuttal": "Corrects a mistake the reader hasn't made instead of asserting the fact, "
-    "e.g. 'X is NOT the y site'.",
+    "e.g. 'X is NOT the y site', or frames a thing by what goes wrong without it, "
+    "e.g. 'without the lock, two saves interleave'.",
     "P11_asymmetric_pair": "Distinguishes two things by negating one instead of naming both "
     "sides symmetrically.",
     "P12_rule_of_three": "Padding lists: 'simpler, cleaner, and more maintainable'.",

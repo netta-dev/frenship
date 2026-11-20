@@ -4,19 +4,22 @@ Ship software with your AI frens. An AI-native SDLC: resumable pipelines, agents
 
 ## What's in it
 
-Three pipelines, each a slash command. Each writes its design doc as it goes and picks up from that doc in a fresh session.
+Start a session with `/gm`: it recommends a pipeline for your brief, or resumes the work in flight. Claude tells you when it's safe to exit a session; run `/gm` in a new one and it continues where you left off.
+
+Four pipelines, each a slash command:
 
 - `/architect` — a new product: architecture doc, milestones. Each milestone later becomes an `/engineer` run.
 - `/engineer` — a milestone or big feature: brainstorm, HLD, phased LLDs, build, wrap-up.
-- `/dev` — a fix or small feature: brainstorm, one plan, build, wrap-up.
+- `/dev` — a small feature, or a fix that needs a design: brainstorm, one plan, build, wrap-up.
+- `/fix` — a fix that doesn't need a design: find the cause, prove it with a failing test, build, wrap-up.
 
 Around them:
 
 - `global/agents/` — subagents: implementer, reviewer, design-reviewer, optioneer, prose-reviewer, comment-reviewer.
 - `global/playbooks/` — the step-by-step instructions a pipeline loads on demand.
-- `global/commands/` — the pipelines plus `/commit`, `/debug`, `/implement`, `/optioneer`, `/time-travel`.
+- `global/commands/` — the pipelines plus `/gm`, `/fix`, `/commit`, `/implement`, `/optioneer`, `/time-travel`.
 - `global/CLAUDE.md`, `conventions.md`, `prose.md` — how the main thread behaves, how code is written, how prose is written.
-- `global/output-styles/`, `hooks/`, `mods/`, `scripts/`, `tools/` — the output style, hooks that confirm commits and block environment dumps, a mod that keeps your account email out of Claude's context, and helper tools. The comment-lint and jevsort tools read their API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
+- `global/output-styles/`, `hooks/`, `mods/`, `scripts/`, `tools/` — the output style, hooks that confirm commits and block environment dumps, a mod that keeps your account email out of Claude's context, and helper tools. The comment-lint tool reads its API key from `TYPESAFE_API_KEY`, or from `~/.env.d/typesafe` if that exists.
 
 Written for Claude Code. The playbooks pick models per step and can hand review or rewrite passes to other vendors' agents.
 

@@ -12,7 +12,7 @@
 ## Aliases
 
 Shortcuts I type; when I do, apply the expansion:
-- `ctr` — present the options with pros, cons, and tradeoffs + a recommendation (with refs, per Lists).
+- `ctr` — present the options with pros, cons, and tradeoffs + a recommendation (with refs, per Lists). When the options are ways to use a third-party tool, library, or service, look up its documented or usual way (`cws`) before ranking.
 - `cxp` — explain more simply and in plainer language; provide more context; add a worked example if it aids understanding; if there's a decision for me, ctr.
 - `cmr` — redo your last message with refs where missing, per Lists.
 - `cws` — do a web search.
@@ -22,11 +22,12 @@ Shortcuts I type; when I do, apply the expansion:
 - `lg` — looks good; commit.
 - `cdr <text>` or `<text> cdr` — I haven't read the text (e.g. a prompt from another Claude). Quote what you refer to in it, check its claims before relying on them, and confirm with me any decision it says I made.
 - `gm [<brief>]` — run `/gm`.
+- `ctt` — tighten the named text: cut justification, restatement, and flourish.
 
 ## Docs
 
 - All prose — chat, comments, docs, commits — follows `~/.claude/prose.md`.
-- `CLAUDE.md` and the files it `@`-imports hold directives and pointers, in extra-tight prose, because they load every prompt. A procedure's mechanics go in the doc its scenario opens.
+- Keep `CLAUDE.md` and its `@`-imports to extra-tight directives and pointers; a procedure's steps go in the doc that's read when it runs.
 - `.claude/context/` files hold what most future changes need: rules, commands, and traps. A rare operation's procedure stays in its runbook.
 - Wrap `<placeholders>` in backticks in markdown — bare `<...>` renders as broken HTML in Obsidian.
 - Reflow `.md` prose to one line per paragraph — never hard-wrap to a column width.

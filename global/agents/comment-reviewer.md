@@ -58,11 +58,11 @@ Per flagged comment:
 
 - `file:line` and kind.
 - The comment, verbatim.
-- Flags: per gated axis, the "breaks a rule" probability and every listed rule with its own, e.g. `comment 0.67: unnecessary 0.62 · prose 0.51: P14 0.39, P2 0.24`.
+- Flags: per gated axis, every listed rule, most likely first, e.g. `comment: unnecessary · prose: P14, P2`.
 - The rewrite or deletion applied (with the split, for a divider).
-- Re-judge: `clean`, or the rule and probability that remain after the last round.
+- Re-judge: `clean`, or the rules that remain after the last round, most likely first.
 
-Then, under a **Still flagged after 5 attempts** heading, list every comment that never came clean: `file:line`, the best attempt, its remaining rule and probability. These need the human's eye; the caller must surface them in its report. Omit the heading when the list is empty.
+Then, under a **Still flagged after 5 attempts** heading, list every comment that never came clean: `file:line`, the best attempt, and its remaining rules, most likely first. These need the human's eye; the caller must surface them in its report. Omit the heading when the list is empty.
 
 Last line: the tool's count line (comments judged, flagged, tokens).
 

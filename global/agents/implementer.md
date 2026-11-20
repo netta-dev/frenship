@@ -32,7 +32,6 @@ Both modes:
 - Never edit files under `docs/designs/` — report needed design-doc changes (status, mechanism notes, backlinks) as observations.
 - Don't fix unrelated bugs/suggestions—include in observations.
 - Write tests for new code. After writing or modifying tests, run the full declared lint+test gate in `capabilities.md`, including the new test files.
-- New test file: get one test passing first (proves harness/imports), then add the rest.
 - Before wiring a vendor/library call, verify it against the installed package (signature, params, mode), found through the project's environment, never `find /`.
 - Delegate bulk-mechanical, context-heavy chunks to your own subagents. Keep the plan, the reasoning-heavy edits, the gate run and the return summary yourself. Wait for them by ending your turn, never a sleep loop.
 

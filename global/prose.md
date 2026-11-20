@@ -25,8 +25,9 @@ P8. **No overstated absolutes**:
    - ✗ "it never re-asks" → ✓ "it won't re-ask"
 P9. **No negation-for-emphasis** — don't reject an alternative nobody assumed:
    - ✗ "configuration, not re-architecture" → ✓ "configuration"
-P10. **Assertions, not rebuttals** — don't correct a mistake the reader hasn't made:
+P10. **Assertions, not rebuttals** — don't correct a mistake the reader hasn't made, or frame a thing by what goes wrong without it; put a consequence that matters second, as a clause:
    - ✗ "`on_force_flat` is *not* the silent-return site — it raises" → ✓ "`force_flat` returns silently; `on_force_flat` raises"
+   - ✗ "without the lock, two saves interleave" → ✓ "the lock serializes saves"
 P11. **Distinguish pairs symmetrically** — one sentence per difference, both sides named:
    - ✗ "the flush path is not where batching happens — ingest batches" → ✓ "Ingest batches; flush writes one record at a time."
 P12. **No rule-of-three padding** — list only the items that carry information:

@@ -27,6 +27,7 @@ Add an item **only** when it's a candidate *generalizable* process change, with 
 Every resolution is a **concrete, generalizable workflow change** — or an explicit `SKIP`. Record the *process* change, not the one-off fix (the fix already happened in the code; the lesson is how to stop the whole class recurring).
 
 - A resolution answers "how do we stop this class of issue recurring," as a concrete action: a new bullet in `.claude/context/conventions.md`, a playbook/command/agent edit, a Claude setting — or `HANDOFF` for a global (`~/.claude/...`) edit.
+- A resolution states the rule and its trigger only. The incident and rationale stay in the item above it.
 - For a finding the *human* caught in her review: the resolution must name the process/convention change that would have caught it first — not just "fixed it."
 - No generalizable lesson? `SKIP — <why>`. Don't record a bare one-off fix as a resolution.
 - A fix status is **not** a resolution: `Fixed` / `Done` / `Refactored` records the code change, not a lesson. Name the process change that stops the class recurring, or `SKIP` — if neither fits, the item doesn't belong here.

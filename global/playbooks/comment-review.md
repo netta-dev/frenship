@@ -26,4 +26,4 @@ Apply 1 or 2 through the symlink, and say it's an uncommitted change to the glob
 
 ## Report
 
-`build.md` step 8 carries the skipped findings as usual, plus the comment-reviewer's **Still flagged after 5 attempts** list verbatim when it has one. A low per-rule figure in the comment-reviewer's flags is never a weak flag; the figures sum to 1 (`comment-reviewer.md` step 1).
+`build.md` step 8 carries the skipped findings as usual, plus the comment-reviewer's **Still flagged after 5 attempts** list verbatim when it has one.
